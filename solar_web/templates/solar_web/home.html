@@ -131,11 +131,19 @@
             color: #fbbf24;
         }
 
-        /* Custom Scroll Spy Active Link Overrides */
-        .nav-link-active {
-            color: #fbbf24 !important; /* Solar Grid Collector Gold Link State */
-            border-color: rgba(251, 191, 36, 0.4) !important;
-            background-color: rgba(251, 191, 36, 0.05) !important;
+        /* HARD OVERRIDE ARCHITECTURE FOR ACTIVE NAVIGATION FOOTPRINT */
+        /* Forces hyper-bright white illumination text with white border details over black layout container */
+        .nav-link-active, 
+        nav a.nav-link-active,
+        header a.nav-link-active,
+        #main-content a.nav-link-active {
+            color: #ffffff !important; 
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.6), 0 0 20px rgba(255, 255, 255, 0.2) !important; /* Hyper-bright bloom signature */
+            background-color: #000000 !important; 
+            border: 1px solid #ffffff !important; /* Clean crisp solid white boundary line */
+            border-radius: 9999px !important; 
+            padding-left: 1.25rem !important;
+            padding-right: 1.25rem !important;
         }
     </style>
 
@@ -309,7 +317,7 @@
                             </div>
                         </div>
 
-                        <div class="space-y-3 bg-slate-950/40 border border-slate-900 rounded-none p-4 relative">
+                        <div class="space-y-3 bg-slate-955/40 border border-slate-900 rounded-none p-4 relative">
                             <div class="flex justify-between items-center">
                                 <label class="text-[10px] font-mono font-bold text-gray-500 uppercase tracking-widest">Tariff Rate (₹/unit): <span id="tariff-val" class="text-white font-mono font-bold">8</span></label>
                             </div>
@@ -491,7 +499,7 @@
                             <div class="pt-4 mt-4 border-t border-slate-800/60 flex items-center justify-between text-[10px] font-mono font-bold tracking-widest text-slate-600 group-hover:text-slate-500 transition-colors duration-300 uppercase">
                                 <span>SYS_HEALTH: 100%</span>
                                 <span class="text-amber-400 flex items-center gap-1 font-bold">
-                                    <span class="w-1 h-1 bg-amber-400 inline-block"></span> OPERATIONAL
+                                    <span class="w-1.5 h-1.5 bg-amber-400 inline-block"></span> OPERATIONAL
                                 </span>
                             </div>
                         </div>
@@ -640,16 +648,19 @@
                             </div>
                         </div>
                     </div>
-                    <button type="submit" class="w-full bg-gradient-to-r from-amber-500 via-orange-500 to-yellow-400 text-slate-950 p-4 rounded-none font-bold font-display text-xs shadow-xl hover:brightness-110 transition-all tracking-widest uppercase mt-2 cursor-pointer">Submit Pipeline to Technical Desk</button>
+                    
+                    <!-- HIGH CONTRAST SUBMIT BUTTON OVERRIDE -->
+                    <button type="submit" class="w-full bg-black text-white border border-slate-800 hover:border-amber-500 p-4 rounded-none font-bold font-display text-xs shadow-2xl transition-all duration-300 tracking-widest uppercase mt-2 cursor-pointer">
+                        Submit Pipeline to Technical Desk
+                    </button>
                 </form>
             </div>
         </section>
 
     </div>
 
+    <!-- Core Runtime Telemetry Scripts -->
     <script>
-        // Synchronized slider UI function
-        // Rendered numbers like '100%' handled cleanly via inline markup variables.
         function updateTariffLabel(val) {
             const tariffValLabel = document.getElementById('tariff-val');
             if (tariffValLabel) {
@@ -663,7 +674,6 @@
             }
         }
 
-        // Calculation Operations Controller Matrix Engine
         function calculateSolarOutputs() {
             const billInput = document.getElementById('calc-bill');
             const tariffInput = document.getElementById('calc-tariff');
@@ -743,7 +753,6 @@
             }
         }
 
-        // Active Preloader Initialization Engine
         document.addEventListener("DOMContentLoaded", function() {
             const preloader = document.getElementById('solar-preloader');
             const mainContent = document.getElementById('main-content');
@@ -793,7 +802,7 @@
             }, 70);
         });
 
-        // Scroll Observer Workspace State Manager
+        // HARD OBSERVER LAYER FOR RE-PAINTING PILL STYLES ON INTERSECTION
         function initializeScrollObserver() {
             const sections = document.querySelectorAll('section[id]');
             
@@ -808,13 +817,39 @@
                     if (entry.isIntersecting) {
                         const currentId = entry.target.getAttribute('id');
                         
+                        // Clear active states across the whole list
                         document.querySelectorAll('a[href*="#"]').forEach(el => {
                             el.classList.remove("nav-link-active");
+                            
+                            // Clean reset to default link states
+                            el.style.setProperty('color', '', 'important');
+                            el.style.setProperty('text-shadow', '', 'important');
+                            el.style.setProperty('background-color', '', 'important');
+                            el.style.setProperty('border', '', 'important');
+                            el.style.setProperty('border-radius', '', 'important');
+                            el.style.setProperty('padding-left', '', 'important');
+                            el.style.setProperty('padding-right', '', 'important');
+                            
+                            if (el.classList.contains('text-white') || el.classList.contains('text-amber-400')) {
+                                el.classList.remove('text-white', 'text-amber-400');
+                                el.classList.add('text-slate-400');
+                            }
                         });
 
+                        // Set Active curved architecture design mapping variables
                         const matchingLinks = document.querySelectorAll(`a[href="#${currentId}"], a[href*="#${currentId}"]`);
                         matchingLinks.forEach(link => {
                             link.classList.add("nav-link-active");
+                            
+                            // High specificity direct layout style overrides with hyper-bright properties
+                            link.style.setProperty('color', '#ffffff', 'important'); // Hyper-white text color code
+                            link.style.setProperty('text-shadow', '0 0 10px rgba(255, 255, 255, 0.6), 0 0 20px rgba(255, 255, 255, 0.2)', 'important'); // Bright neon-glow trace pass
+                            link.style.setProperty('background-color', '#000000', 'important'); // Background black
+                            link.style.setProperty('border', '1px solid #ffffff', 'important'); // Crisp solid white structural boundary line edge
+                            link.style.setProperty('border-radius', '9999px', 'important'); // Capsule curve layout
+                            link.style.setProperty('padding-left', '1.25rem', 'important');
+                            link.style.setProperty('padding-right', '1.25rem', 'important');
+                            link.classList.remove('text-slate-400', 'text-white');
                         });
                     }
                 });
@@ -825,7 +860,6 @@
     </script>
 
     <script>
-        // Hero Card Orientation Dynamics Control System
         document.addEventListener('DOMContentLoaded', () => {
             const card = document.getElementById('hero-3d-card');
             const container = card ? card.parentElement : null;
@@ -853,7 +887,6 @@
     </script>
 
     <script>
-        // Project Slider Navigation Module
         document.addEventListener("DOMContentLoaded", function() {
             const track = document.getElementById('project-slider-track');
             const prevBtn = document.getElementById('project-prev');

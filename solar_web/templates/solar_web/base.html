@@ -91,6 +91,29 @@
                 pointer-events: auto;
                 transform: translateY(0);
             }
+            .dropdown-wrapper:hover .dropdown-arrow {
+                transform: rotate(180deg);
+            }
+        }
+
+        /* DYNAMIC NAV LINK INLINE SPECIFICITY OVERRIDES */
+        .nav-item-active-pill {
+            color: #ffffff !important;
+            background-color: #0f172a !important; /* Deep Slate/Black base contrast color */
+            border: 1px solid rgba(255, 255, 255, 0.15) !important;
+            border-radius: 9999px !important; /* Elegant curved configuration tracking */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
+            text-shadow: 0 0 8px rgba(255, 255, 255, 0.4) !important;
+        }
+
+        /* ACTIONS DESK BUTTON BRIGHT CONTRAST FIXES */
+        .btn-quote-bright {
+            color: #ffffff !important;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8), 0 0 4px rgba(255, 255, 255, 0.2);
+        }
+        .btn-quote-bright:hover {
+            color: #0f172a !important;
+            text-shadow: none !important;
         }
     </style>
 </head>
@@ -100,52 +123,47 @@
 
     <header class="sticky top-0 z-50 w-full px-4 sm:px-6 lg:px-8 pt-4 pb-2 premium-glass-header">
         
-        <!-- Interactive Navigation Base Panel with Premium Sharp Styling -->
         <div class="max-w-7xl mx-auto h-16 px-4 sm:px-6 flex items-center justify-between rounded-md shadow-[0_16px_40px_rgba(0,0,0,0.04)] border border-slate-200/50 backdrop-blur-md transition-all duration-300 snake-track-card">
             
-            <!-- Dynamic Brand Title Component -->
             <a href="{% url 'home' %}" class="group flex items-center gap-2 outline-none shrink-0 px-2.5 py-1.5 rounded-md border border-transparent hover:border-slate-200 hover:bg-slate-50/80 transition-all duration-300 relative z-10">
                 <div class="text-xl font-black text-slate-900 tracking-tight group-hover:scale-[1.01] transition-transform duration-300">
                     SIP <span class="text-amber-500 group-hover:text-amber-600 transition-colors duration-300">INFRA</span>
                 </div>
             </a>
             
-            <!-- Center Navigation Links Segment -->
-            <div id="desktop-nav-links" class="hidden md:flex items-center space-x-1 lg:space-x-2 font-bold text-xs uppercase tracking-wider text-slate-800 relative z-10">
-                <a href="{% url 'home' %}#home" class="nav-item px-3 py-2 rounded-md border border-transparent hover:border-slate-200/80 hover:text-slate-950 hover:bg-slate-100/70 transition-all duration-200">Home</a>
-                <a href="{% url 'home' %}#solar_calculator" class="nav-item px-3 py-2 rounded-md border border-transparent hover:border-slate-200/80 hover:text-slate-950 hover:bg-slate-100/70 transition-all duration-200">Solar Calculator</a>
-                <a href="{% url 'projects_portfolio' %}" class="nav-item block px-4 py-2.5 text-[11px] rounded-md hover:bg-slate-50 hover:text-amber-600 transition">Portfolio Map</a>
-                <a href="{% url 'home' %}#services" class="nav-item px-3 py-2 rounded-md border border-transparent hover:border-slate-200/80 hover:text-slate-950 hover:bg-slate-100/70 transition-all duration-200">Services</a>
-                <a href="{% url 'home' %}#projects" class="nav-item px-3 py-2 rounded-md border border-transparent hover:border-slate-200/80 hover:text-slate-950 hover:bg-slate-100/70 transition-all duration-200">Our Work</a>
+            <div id="desktop-nav-links" class="hidden md:flex items-center space-x-1 lg:space-x-1.5 font-bold text-xs uppercase tracking-wider text-slate-600 relative z-10">
+                <a id="nav-home-link" href="{% url 'home' %}#home" class="nav-item px-3.5 py-2.5 rounded-md border border-transparent hover:text-slate-950 hover:bg-slate-100/80 transition-all duration-200">Home</a>
+                <a href="{% url 'home' %}#solar_calculator" class="nav-item px-3.5 py-2.5 rounded-md border border-transparent hover:text-slate-950 hover:bg-slate-100/80 transition-all duration-200">Solar Calculator</a>
+                <a href="{% url 'projects_portfolio' %}" class="nav-item px-3.5 py-2.5 rounded-md border border-transparent hover:text-slate-950 hover:bg-slate-100/80 transition-all duration-200">Portfolio Map</a>
+                <a href="{% url 'home' %}#services" class="nav-item px-3.5 py-2.5 rounded-md border border-transparent hover:text-slate-950 hover:bg-slate-100/80 transition-all duration-200">Services</a>
+                <a href="{% url 'home' %}#projects" class="nav-item px-3.5 py-2.5 rounded-md border border-transparent hover:text-slate-950 hover:bg-slate-100/80 transition-all duration-200">Our Work</a>
                 
                 <div class="relative dropdown-wrapper py-2">
-                    <button type="button" class="nav-item flex items-center gap-1 px-3 py-2 rounded-md border border-transparent hover:border-slate-200/80 hover:text-slate-950 hover:bg-slate-100/70 transition-all duration-200 cursor-pointer uppercase font-bold text-xs tracking-wider text-slate-800">
-                        Our Solutions
-                        <svg class="w-3 h-3 text-slate-500 group-hover:text-slate-950 transition-transform duration-200 dropdown-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <button type="button" id="solutions-dropdown-btn" class="nav-item flex items-center gap-1 px-3.5 py-2.5 rounded-md border border-transparent hover:text-slate-950 hover:bg-slate-100/80 transition-all duration-200 cursor-pointer uppercase font-bold text-xs tracking-wider text-slate-600 outline-none">
+                        <span id="solutions-btn-text">Our Solutions</span>
+                        <svg class="w-3 h-3 text-slate-400 group-hover:text-slate-950 transition-transform duration-200 dropdown-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" />
                         </svg>
                     </button>
 
-                    <div class="dropdown-panel absolute left-1/2 -translate-x-1/2 top-full mt-2 w-64 bg-white/95 backdrop-blur-xl border border-slate-200 shadow-xl rounded-md p-2 opacity-0 pointer-events-none transform -translate-y-2 transition-all duration-200 z-50">
-                        <a href="{% url 'industrial' %}" class="nav-item block px-4 py-2.5 text-[11px] rounded-md hover:bg-slate-50 hover:text-amber-600 transition">Industrial MW</a>
-                        <a href="{% url 'commercial' %}" class="nav-item block px-4 py-2.5 text-[11px] rounded-md hover:bg-slate-50 hover:text-amber-600 transition">Commercial CAPEX</a>
-                        <a href="{% url 'residential' %}" class="nav-item block px-4 py-2.5 text-[11px] rounded-md hover:bg-slate-50 hover:text-amber-600 transition">Residential</a>
-                        <a href="{% url 'subsidy' %}" class="nav-item block px-4 py-2.5 text-[11px] rounded-md hover:bg-slate-50 hover:text-amber-600 transition">Subsidy Core</a>
-                        <a href="{% url 'engineering_epc' %}" class="nav-item block px-4 py-2.5 text-[11px] rounded-md hover:bg-slate-50 hover:text-amber-600 transition">EPC Spec</a>
-                        <a href="{% url 'operation_maintenance' %}" class="nav-item block px-4 py-2.5 text-[11px] rounded-md hover:bg-slate-50 hover:text-amber-600 transition">O&M Operations</a>
-                        <a href="{% url 'investor_relations' %}" class="nav-item block px-4 py-2.5 text-[11px] rounded-md hover:bg-slate-50 hover:text-amber-600 transition">ESG Deck</a>
+                    <div class="dropdown-panel absolute left-1/2 -translate-x-1/2 top-full mt-2 w-64 bg-white/95 backdrop-blur-xl border border-slate-200/80 shadow-2xl rounded-md p-1.5 opacity-0 pointer-events-none transform -translate-y-2 transition-all duration-200 z-50">
+                        <a href="{% url 'industrial' %}" class="nav-item block px-4 py-2.5 text-[11px] rounded-md text-slate-700 hover:bg-slate-50 hover:text-amber-600 transition duration-150">Industrial MW</a>
+                        <a href="{% url 'commercial' %}" class="nav-item block px-4 py-2.5 text-[11px] rounded-md text-slate-700 hover:bg-slate-50 hover:text-amber-600 transition duration-150">Commercial CAPEX</a>
+                        <a href="{% url 'residential' %}" class="nav-item block px-4 py-2.5 text-[11px] rounded-md text-slate-700 hover:bg-slate-50 hover:text-amber-600 transition duration-150">Residential</a>
+                        <a href="{% url 'subsidy' %}" class="nav-item block px-4 py-2.5 text-[11px] rounded-md text-slate-700 hover:bg-slate-50 hover:text-amber-600 transition duration-150">Subsidy Core</a>
+                        <a href="{% url 'engineering_epc' %}" class="nav-item block px-4 py-2.5 text-[11px] rounded-md text-slate-700 hover:bg-slate-50 hover:text-amber-600 transition duration-150">EPC Spec</a>
+                        <a href="{% url 'operation_maintenance' %}" class="nav-item block px-4 py-2.5 text-[11px] rounded-md text-slate-700 hover:bg-slate-50 hover:text-amber-600 transition duration-150">O&M Operations</a>
+                        <a href="{% url 'investor_relations' %}" class="nav-item block px-4 py-2.5 text-[11px] rounded-md text-slate-700 hover:bg-slate-50 hover:text-amber-600 transition duration-150">ESG Deck</a> 
                     </div>
                 </div>
             </div>
 
-            <!-- Action Button Area -->
             <div class="hidden md:flex items-center shrink-0 relative z-10">
-                <a href="{% url 'home' %}#contact" class="px-4 py-2 bg-slate-950 text-white font-extrabold rounded-md shadow-sm hover:bg-amber-500 hover:text-slate-950 hover:scale-[1.02] transition-all duration-300 text-xs tracking-wider uppercase">
+                <a href="{% url 'home' %}#contact" class="btn-quote-bright px-5 h-10 flex items-center justify-center bg-slate-950 font-extrabold rounded-md shadow-md shadow-slate-950/10 hover:bg-amber-500 transform hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 text-xs tracking-wider uppercase">
                     Get a Quote
                 </a>
             </div>
 
-            <!-- Mobile Controller Toggle Interface -->
             <div class="flex items-center md:hidden relative z-10">
                 <button type="button" id="menu-toggle-btn" class="inline-flex items-center justify-center p-2 rounded-md text-slate-800 hover:bg-slate-100 focus:outline-none transition cursor-pointer" aria-label="Toggle Menu">
                     <svg id="menu-icon" class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -155,28 +173,27 @@
             </div>
         </div>
 
-        <!-- Dropdown Mobile Overlay List Menu -->
         <div id="mobile-menu" class="hidden md:hidden absolute top-full left-4 right-4 mt-2 bg-white/98 backdrop-blur-xl border border-slate-200 shadow-2xl rounded-md transition-all duration-200 transform scale-y-95 origin-top opacity-0 max-h-[calc(100vh-6rem)] overflow-y-auto z-50">
-            <div id="mobile-nav-links" class="p-4 space-y-1 font-bold text-slate-800 text-xs uppercase tracking-wider">
-                <a href="{% url 'home' %}#home" class="mobile-nav-item block px-4 py-2.5 rounded-md hover:bg-slate-50 hover:text-amber-500 transition">Home</a>
-                <a href="{% url 'home' %}#solar_calculator" class="mobile-nav-item block px-4 py-2.5 rounded-md hover:bg-slate-50 hover:text-amber-500 transition">Solar Calculator</a>
-                <a href="{% url 'projects_portfolio' %}" class="mobile-nav-item block px-4 py-2.5 rounded-md hover:bg-slate-50 hover:text-amber-500 transition">Portfolio Map</a>
-                <a href="{% url 'home' %}#services" class="mobile-nav-item block px-4 py-2.5 rounded-md hover:bg-slate-50 hover:text-amber-500 transition">Services</a>
-                <a href="{% url 'home' %}#projects" class="mobile-nav-item block px-4 py-2.5 rounded-md hover:bg-slate-50 hover:text-amber-500 transition">Our Work</a>
+            <div id="mobile-nav-links" class="p-4 space-y-1 font-bold text-slate-600 text-xs uppercase tracking-wider">
+                <a id="mobile-home-link" href="{% url 'home' %}#home" class="mobile-nav-item block px-4 py-3 rounded-md hover:bg-slate-50 hover:text-slate-950 transition">Home</a>
+                <a href="{% url 'home' %}#solar_calculator" class="mobile-nav-item block px-4 py-3 rounded-md hover:bg-slate-50 hover:text-slate-950 transition">Solar Calculator</a>
+                <a href="{% url 'projects_portfolio' %}" class="mobile-nav-item block px-4 py-3 rounded-md hover:bg-slate-50 hover:text-slate-950 transition">Portfolio Map</a>
+                <a href="{% url 'home' %}#services" class="mobile-nav-item block px-4 py-3 rounded-md hover:bg-slate-50 hover:text-slate-950 transition">Services</a>
+                <a href="{% url 'home' %}#projects" class="mobile-nav-item block px-4 py-3 rounded-md hover:bg-slate-50 hover:text-slate-950 transition">Our Work</a>
                 
                 <div class="h-px bg-slate-100 my-3"></div>
-                <div class="text-[10px] text-slate-400 tracking-widest pl-4 mb-1 uppercase">Solutions & Portfolio</div>
+                <div class="text-[10px] text-slate-400 tracking-widest pl-4 mb-1 uppercase font-black">Solutions & Portfolio</div>
 
-                <a href="{% url 'industrial' %}" class="mobile-nav-item block px-4 py-2.5 rounded-md hover:bg-slate-50 hover:text-amber-500 transition">Industrial MW</a>
-                <a href="{% url 'commercial' %}" class="mobile-nav-item block px-4 py-2.5 rounded-md hover:bg-slate-50 hover:text-amber-500 transition">Commercial CAPEX</a>
-                <a href="{% url 'residential' %}" class="mobile-nav-item block px-4 py-2.5 rounded-md hover:bg-slate-50 hover:text-amber-500 transition">Residential</a>
-                <a href="{% url 'subsidy' %}" class="mobile-nav-item block px-4 py-2.5 rounded-md hover:bg-slate-50 hover:text-amber-500 transition">Subsidy Core</a>
-                <a href="{% url 'engineering_epc' %}" class="mobile-nav-item block px-4 py-2.5 rounded-md hover:bg-slate-50 hover:text-amber-500 transition">EPC Spec</a>
-                <a href="{% url 'operation_maintenance' %}" class="mobile-nav-item block px-4 py-2.5 rounded-md hover:bg-slate-50 hover:text-amber-500 transition">O&M Operations</a>
-                <a href="{% url 'investor_relations' %}" class="mobile-nav-item block px-4 py-2.5 rounded-md hover:bg-slate-50 hover:text-amber-500 transition">ESG Deck</a> 
+                <a href="{% url 'industrial' %}" class="mobile-nav-item block px-4 py-2.5 rounded-md text-slate-700 hover:bg-slate-50 hover:text-amber-600 transition">Industrial MW</a>
+                <a href="{% url 'commercial' %}" class="mobile-nav-item block px-4 py-2.5 rounded-md text-slate-700 hover:bg-slate-50 hover:text-amber-600 transition">Commercial CAPEX</a>
+                <a href="{% url 'residential' %}" class="mobile-nav-item block px-4 py-2.5 rounded-md text-slate-700 hover:bg-slate-50 hover:text-amber-600 transition">Residential</a>
+                <a href="{% url 'subsidy' %}" class="mobile-nav-item block px-4 py-2.5 rounded-md text-slate-700 hover:bg-slate-50 hover:text-amber-600 transition">Subsidy Core</a>
+                <a href="{% url 'engineering_epc' %}" class="mobile-nav-item block px-4 py-2.5 rounded-md text-slate-700 hover:bg-slate-50 hover:text-amber-600 transition">EPC Spec</a>
+                <a href="{% url 'operation_maintenance' %}" class="mobile-nav-item block px-4 py-2.5 rounded-md text-slate-700 hover:bg-slate-50 hover:text-amber-600 transition">O&M Operations</a>
+                <a href="{% url 'investor_relations' %}" class="mobile-nav-item block px-4 py-2.5 rounded-md text-slate-700 hover:bg-slate-50 hover:text-amber-600 transition">ESG Deck</a> 
                 
                 <div class="pt-4 mt-2">
-                    <a href="{% url 'home' %}#contact" class="mobile-nav-item block text-center w-full bg-slate-950 text-white font-extrabold py-3 rounded-md shadow-md hover:bg-amber-500 hover:text-slate-950 transition text-xs tracking-wider uppercase">
+                    <a href="{% url 'home' %}#contact" class="btn-quote-bright mobile-nav-item block text-center w-full bg-slate-950 font-extrabold py-3.5 rounded-md shadow-md hover:bg-amber-500 transition text-xs tracking-wider uppercase">
                         Get a Quote
                     </a>
                 </div>
@@ -189,24 +206,20 @@
         {% endblock %}
     </main>
 
-    <!-- CLEAN, MINIMALIST & ELEGANT EXECUTIVE FOOTER -->
     <footer class="bg-slate-950 text-slate-400 pt-16 pb-12 px-4 sm:px-6 lg:px-8 border-t border-slate-900 relative z-30">
         <div class="max-w-7xl mx-auto">
             
-            <!-- Main Information Grid Map -->
             <div class="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-12 gap-8 lg:gap-12 pb-12">
                 
-                <!-- Corporate Pillar Info Block -->
                 <div class="lg:col-span-4 space-y-4">
                     <div class="text-xl font-black text-white tracking-tight">
                         SIP <span class="text-amber-500">INFRA</span>
                     </div>
                     <p class="text-xs text-slate-400 font-light leading-relaxed max-w-sm">
-                        Designing high-yield captive solar assets and institutional power distribution networks securely across South India[cite: 1].
+                        Designing high-yield captive solar assets and institutional power distribution networks securely across South India.
                     </p>
                 </div>
 
-                <!-- Column 2: Platform Links -->
                 <div class="lg:col-span-2 space-y-3">
                     <h5 class="text-xs font-bold text-slate-200 tracking-wider">Company</h5>
                     <ul class="space-y-2 text-xs font-light">
@@ -216,7 +229,6 @@
                     </ul>
                 </div>
 
-                <!-- Column 3: Solutions Split -->
                 <div class="lg:col-span-3 space-y-3">
                     <h5 class="text-xs font-bold text-slate-200 tracking-wider">Solar Solutions</h5>
                     <ul class="space-y-2 text-xs font-light">
@@ -226,7 +238,6 @@
                     </ul>
                 </div>
 
-                <!-- Column 4: Operational Pillars -->
                 <div class="lg:col-span-3 space-y-3">
                     <h5 class="text-xs font-bold text-slate-200 tracking-wider">Operations</h5>
                     <ul class="space-y-2 text-xs font-light">
@@ -237,13 +248,11 @@
                 </div>
             </div>
 
-            <!-- Crisp Fine-Print Footer Row -->
             <div class="pt-8 border-t border-slate-900 flex flex-col sm:flex-row justify-between items-center gap-4 text-[11px] text-slate-500 font-light tracking-wide">
                 <div class="text-center sm:text-left">
-                    &copy; 2026 SIP INFRA. Clean Infrastructure Management. All Rights Reserved[cite: 1].
+                    &copy; 2026 SIP INFRA. Clean Infrastructure Management. All Rights Reserved.
                 </div>
                 
-                <!-- Clean Minimal Technical Indicators -->
                 <div class="flex items-center gap-4 font-mono text-[10px] text-slate-600">
                     <span>CEIG COMPLIANT</span>
                     <span class="w-1 h-1 rounded-full bg-slate-800"></span>
@@ -291,47 +300,111 @@
                 });
             });
 
-            // SAFELY TRACK ACTIVE LINK HIGHLIGHTS AND ENSURE CLEAN CONTRACT WITH BORDER UPDATES
-            const activeClasses = ["text-amber-600", "bg-amber-500/10", "border-amber-500/20"];
+            const dskHome = document.getElementById('nav-home-link');
+            const mblHome = document.getElementById('mobile-home-link');
+
+            // HIGH-CONTRAST DYNAMIC HIGH-SPECIFICITY PILL RE-PAINT ENGINE
             function runActiveHighlighter() {
                 const path = window.location.pathname;
                 const hash = window.location.hash;
+                const solutionsBtnText = document.getElementById('solutions-btn-text');
 
-                document.querySelectorAll(".nav-item, .mobile-nav-item, .dropdown-wrapper button").forEach(el => {
-                    el.classList.remove(...activeClasses, "text-amber-600");
+                if (solutionsBtnText) {
+                    solutionsBtnText.innerText = "Our Solutions";
+                }
+
+                // Strip active pill style architecture cleanly across links except home
+                document.querySelectorAll(".nav-item, .mobile-nav-item").forEach(el => {
+                    if (el !== dskHome && el !== mblHome) {
+                        el.classList.remove("nav-item-active-pill");
+                        el.style.setProperty('color', '', 'important');
+                        el.style.setProperty('text-shadow', '', 'important');
+                        el.style.setProperty('background-color', '', 'important');
+                        el.style.setProperty('border-radius', '', 'important');
+                        el.style.setProperty('border', '', 'important');
+                    }
                 });
 
-                const allLinks = document.querySelectorAll("#desktop-nav-links .nav-item, .dropdown-panel .nav-item, #mobile-nav-links .mobile-nav-item");
+                // Targets active endpoints safely
+                const allLinks = document.querySelectorAll(
+                    "#desktop-nav-links .nav-item:not(#nav-home-link), " +
+                    ".dropdown-panel .nav-item, " +
+                    "#mobile-nav-links .mobile-nav-item:not(#mobile-home-link)"
+                );
+                
                 let matched = false;
 
                 allLinks.forEach(link => {
                     const href = link.getAttribute("href");
                     if (!href) return;
 
-                    const cleanHref = href.replace(/.*?(?=\/|$)/, ''); 
-
                     if (hash && href.includes(hash)) {
-                        link.classList.add(...activeClasses);
+                        link.classList.add("nav-item-active-pill");
                         matched = true;
                     } else if (!hash && path !== '/' && href.includes(path) && !href.includes('#')) {
-                        link.classList.add(...activeClasses);
+                        link.classList.add("nav-item-active-pill");
+                        
                         if (link.closest('.dropdown-panel')) {
                             const parentBtn = link.closest('.dropdown-wrapper').querySelector('button');
-                            if (parentBtn) parentBtn.classList.add("text-amber-600");
+                            if (parentBtn && solutionsBtnText) {
+                                solutionsBtnText.innerText = link.innerText.trim();
+                                parentBtn.classList.add("nav-item-active-pill");
+                            }
                         }
                         matched = true;
                     }
                 });
 
-                if (!matched && (path === '/' || path === '') && !hash) {
-                    document.querySelectorAll('a[href*="#home"]').forEach(homeLink => {
-                        homeLink.classList.add(...activeClasses);
+                // HIGH-ACCURACY SCROLL ENGINE DETECTOR FOR ROOT LANDINGS
+                // Automatically evaluates if home tab turns active when at top viewports
+                if (window.scrollY === 0 && (path === '/' || path === '' || hash === '#home')) {
+                    [dskHome, mblHome].forEach(el => {
+                        if (el) el.classList.add("nav-item-active-pill");
+                    });
+                } else {
+                    [dskHome, mblHome].forEach(el => {
+                        if (el && !el.matches(':hover')) {
+                            el.classList.remove("nav-item-active-pill");
+                            el.style.setProperty('color', '', 'important');
+                            el.style.setProperty('text-shadow', '', 'important');
+                            el.style.setProperty('background-color', '', 'important');
+                            el.style.setProperty('border', '', 'important');
+                        }
                     });
                 }
             }
 
-            runActiveHighlighter();
+            // MOUSE HOVER STATE CONTROL MATRIX
+            function forceHomeHoverActive(el, isHover) {
+                if (!el) return;
+                if (isHover) {
+                    el.classList.add("nav-item-active-pill");
+                } else {
+                    // Instantly evaluate viewport matrix configurations on mouse leave
+                    if (window.scrollY > 0) {
+                        el.classList.remove("nav-item-active-pill");
+                        el.style.setProperty('color', '', 'important');
+                        el.style.setProperty('text-shadow', '', 'important');
+                        el.style.setProperty('background-color', '', 'important');
+                        el.style.setProperty('border', '', 'important');
+                    }
+                    runActiveHighlighter();
+                }
+            }
+
+            if (dskHome) {
+                dskHome.addEventListener('mouseenter', () => forceHomeHoverActive(dskHome, true));
+                dskHome.addEventListener('mouseleave', () => forceHomeHoverActive(dskHome, false));
+            }
+            if (mblHome) {
+                mblHome.addEventListener('mouseenter', () => forceHomeHoverActive(mblHome, true));
+                mblHome.addEventListener('mouseleave', () => forceHomeHoverActive(mblHome, false));
+            }
+
+            // Sync dynamic viewport position coordinates
+            window.addEventListener("scroll", runActiveHighlighter, { passive: true });
             window.addEventListener("hashchange", runActiveHighlighter);
+            runActiveHighlighter();
         });
     </script>
 </body>

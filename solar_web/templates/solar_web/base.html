@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SIP INFRA | Megawatt Solar Solutions Tamil Nadu</title>
-    <!-- Alternative Angular Solar Panel & Sun Favicon -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23f59e0b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41'/%3E%3Cpath fill='%23f59e0b' d='M5 13h14l-2 5H7l-2-5z'/%3E%3Cpath d='M12 13v5M8.5 15.5l7 0'/%3E%3C/svg%3E"/>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     
@@ -115,6 +114,7 @@
             <div id="desktop-nav-links" class="hidden md:flex items-center space-x-1 lg:space-x-2 font-bold text-xs uppercase tracking-wider text-slate-800 relative z-10">
                 <a href="{% url 'home' %}#home" class="nav-item px-3 py-2 rounded-md border border-transparent hover:border-slate-200/80 hover:text-slate-950 hover:bg-slate-100/70 transition-all duration-200">Home</a>
                 <a href="{% url 'home' %}#solar_calculator" class="nav-item px-3 py-2 rounded-md border border-transparent hover:border-slate-200/80 hover:text-slate-950 hover:bg-slate-100/70 transition-all duration-200">Solar Calculator</a>
+                <a href="{% url 'projects_portfolio' %}" class="nav-item block px-4 py-2.5 text-[11px] rounded-md hover:bg-slate-50 hover:text-amber-600 transition">Portfolio Map</a>
                 <a href="{% url 'home' %}#services" class="nav-item px-3 py-2 rounded-md border border-transparent hover:border-slate-200/80 hover:text-slate-950 hover:bg-slate-100/70 transition-all duration-200">Services</a>
                 <a href="{% url 'home' %}#projects" class="nav-item px-3 py-2 rounded-md border border-transparent hover:border-slate-200/80 hover:text-slate-950 hover:bg-slate-100/70 transition-all duration-200">Our Work</a>
                 
@@ -133,7 +133,6 @@
                         <a href="{% url 'subsidy' %}" class="nav-item block px-4 py-2.5 text-[11px] rounded-md hover:bg-slate-50 hover:text-amber-600 transition">Subsidy Core</a>
                         <a href="{% url 'engineering_epc' %}" class="nav-item block px-4 py-2.5 text-[11px] rounded-md hover:bg-slate-50 hover:text-amber-600 transition">EPC Spec</a>
                         <a href="{% url 'operation_maintenance' %}" class="nav-item block px-4 py-2.5 text-[11px] rounded-md hover:bg-slate-50 hover:text-amber-600 transition">O&M Operations</a>
-                        <a href="{% url 'projects_portfolio' %}" class="nav-item block px-4 py-2.5 text-[11px] rounded-md hover:bg-slate-50 hover:text-amber-600 transition">Portfolio Map</a>
                         <a href="{% url 'investor_relations' %}" class="nav-item block px-4 py-2.5 text-[11px] rounded-md hover:bg-slate-50 hover:text-amber-600 transition">ESG Deck</a>
                     </div>
                 </div>
@@ -161,6 +160,7 @@
             <div id="mobile-nav-links" class="p-4 space-y-1 font-bold text-slate-800 text-xs uppercase tracking-wider">
                 <a href="{% url 'home' %}#home" class="mobile-nav-item block px-4 py-2.5 rounded-md hover:bg-slate-50 hover:text-amber-500 transition">Home</a>
                 <a href="{% url 'home' %}#solar_calculator" class="mobile-nav-item block px-4 py-2.5 rounded-md hover:bg-slate-50 hover:text-amber-500 transition">Solar Calculator</a>
+                <a href="{% url 'projects_portfolio' %}" class="mobile-nav-item block px-4 py-2.5 rounded-md hover:bg-slate-50 hover:text-amber-500 transition">Portfolio Map</a>
                 <a href="{% url 'home' %}#services" class="mobile-nav-item block px-4 py-2.5 rounded-md hover:bg-slate-50 hover:text-amber-500 transition">Services</a>
                 <a href="{% url 'home' %}#projects" class="mobile-nav-item block px-4 py-2.5 rounded-md hover:bg-slate-50 hover:text-amber-500 transition">Our Work</a>
                 
@@ -173,7 +173,6 @@
                 <a href="{% url 'subsidy' %}" class="mobile-nav-item block px-4 py-2.5 rounded-md hover:bg-slate-50 hover:text-amber-500 transition">Subsidy Core</a>
                 <a href="{% url 'engineering_epc' %}" class="mobile-nav-item block px-4 py-2.5 rounded-md hover:bg-slate-50 hover:text-amber-500 transition">EPC Spec</a>
                 <a href="{% url 'operation_maintenance' %}" class="mobile-nav-item block px-4 py-2.5 rounded-md hover:bg-slate-50 hover:text-amber-500 transition">O&M Operations</a>
-                <a href="{% url 'projects_portfolio' %}" class="mobile-nav-item block px-4 py-2.5 rounded-md hover:bg-slate-50 hover:text-amber-500 transition">Portfolio Map</a>
                 <a href="{% url 'investor_relations' %}" class="mobile-nav-item block px-4 py-2.5 rounded-md hover:bg-slate-50 hover:text-amber-500 transition">ESG Deck</a> 
                 
                 <div class="pt-4 mt-2">

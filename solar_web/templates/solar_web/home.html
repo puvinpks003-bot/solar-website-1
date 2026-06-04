@@ -471,7 +471,7 @@
                             <span class="truncate max-w-[140px]">{{ project.location }}</span>
                         </div>
 
-                        <p class="text-slate-400 text-xs leading-relaxed font-light line-clamp-3 pt-1">
+                        <p class="text-slate-400 text-xs leading-relaxed font-light line-clamp-3 pt-1:">
                             {{ project.description }}
                         </p>
                     </div>
@@ -743,8 +743,15 @@
         const monthlySavings = monthlyBill;
         const annualSavings = monthlySavings * 12;
 
-        // Populate Interface Display Nodes
-        if (sysSizeEl) sysSizeEl.innerText = displaySystemSizeKw + " kW";
+        // Populate Interface Display Nodes (With automated MW scale conversion logic)
+        if (sysSizeEl) {
+            if (displaySystemSizeKw >= 1000) {
+                const systemSizeMw = (displaySystemSizeKw / 1000).toFixed(2);
+                sysSizeEl.innerText = parseFloat(systemSizeMw) + " MW";
+            } else {
+                sysSizeEl.innerText = displaySystemSizeKw + " kW";
+            }
+        }
         if (consumptionEl) consumptionEl.innerText = monthlyConsumption.toLocaleString('en-IN') + " Units";
         if (panelsEl) panelsEl.innerText = panelsRequired.toLocaleString('en-IN');
         if (costEl) costEl.innerText = "₹" + estimatedCost.toLocaleString('en-IN');

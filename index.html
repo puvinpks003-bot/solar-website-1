@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AETHER | Next-Gen Photovoltaic Architectural Roofing</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cyber: {
+                            cyan: '#00f3ff',
+                            emerald: '#059669',
+                            dark: '#0a0a0c',
+                            gray: '#16161a'
+                        }
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        :root {
+            --background: #0a0a0c;
+            --foreground: #f4f4f7;
+        }
+        body {
+            color: var(--foreground);
+            background-color: var(--background);
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            overflow-x: hidden;
+        }
+        /* Custom Premium Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0a0a0c;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #222226;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #00f3ff;
+        }
+        /* Glassmorphism Classes */
+        .glass-panel {
+            background: rgba(22, 22, 26, 0.65);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .glass-card {
+            background: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .glass-card:hover {
+            border-color: rgba(0, 243, 255, 0.3);
+            box-shadow: 0 0 30px rgba(0, 243, 255, 0.05);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-cyber-cyan selection:text-black">
+
+    <div id="canvas-container" class="fixed inset-0 -z-10 w-full h-full bg-gradient-to-b from-[#0a0a0c] via-[#0d1117] to-[#0a0a0c]"></div>
+
+    <header class="fixed top-0 left-0 w-full z-50 px-6 md:px-24 py-6 flex justify-between items-center backdrop-blur-md bg-black/10 border-b border-white/5">
+        <span class="text-xl font-bold tracking-[0.3em] text-white">AETHER</span>
+        <nav class="hidden md:flex gap-10 text-xs tracking-widest text-neutral-400 font-medium uppercase">
+            <a href="#hero" class="hover:text-cyber-cyan transition-colors duration-300">Home</a>
+            <a href="#calculator" class="hover:text-cyber-cyan transition-colors duration-300">Performance Matrix</a>
+            <a href="#showcase" class="hover:text-cyber-cyan transition-colors duration-300">Architecture</a>
+            <a href="#contact" class="hover:text-cyber-cyan transition-colors duration-300">Enlist Development</a>
+        </nav>
+        <button class="px-5 py-2 glass-panel text-xs tracking-widest uppercase rounded-full text-white font-semibold hover:border-cyber-cyan/50 transition-all duration-300">
+            Portal
+        </button>
+    </header>
+
+    <section id="hero" class="relative min-h-screen w-full flex flex-col justify-center px-6 md:px-24 pt-24 pb-12 pointer-events-none">
+        <div class="max-w-2xl my-auto pt-12 md:pt-20">
+            <span class="text-xs uppercase tracking-[0.4em] text-cyber-cyan font-bold block mb-4 animate-pulse-slow">
+                Building Integrated Photovoltaics (BIPV)
+            </span>
+            <h1 class="text-4xl md:text-7xl font-light tracking-tight text-white leading-none mb-6">
+                The Roof Is The <br>
+                <span class="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-white via-neutral-200 to-neutral-500">
+                    Power Grid
+                </span>
+            </h1>
+            <p class="text-neutral-400 text-sm md:text-base leading-relaxed font-light tracking-wide max-w-lg mb-8 pointer-events-auto">
+                A seamless architectural fusion of structural-grade tempered safety glass tiles and maximum efficiency micro-engineered solar collection cells. Built for sustainable luxury grids.
+            </p>
+            <div class="flex flex-wrap gap-4 pointer-events-auto">
+                <a href="#contact" class="px-8 py-4 bg-white text-black font-semibold text-xs tracking-widest uppercase rounded-sm hover:bg-cyber-cyan transition-all duration-300 shadow-xl">
+                    Configure System
+                </a>
+                <a href="#showcase" class="px-8 py-4 glass-panel text-white font-semibold text-xs tracking-widest uppercase rounded-sm hover:bg-white/5 transition-all duration-300">
+                    Specifications
+                </a>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 border-t border-white/5 pt-8 pointer-events-auto z-10 bg-gradient-to-t from-black/50 via-transparent to-transparent backdrop-blur-[2px]">
+            <div>
+                <span class="text-[10px] text-neutral-500 block tracking-widest uppercase mb-1">Max Power Index</span>
+                <span class="text-xl md:text-2xl font-light text-white tracking-tight">420 W / Tile</span>
+            </div>
+            <div>
+                <span class="text-[10px] text-neutral-500 block tracking-widest uppercase mb-1">Impact Resistance</span>
+                <span class="text-xl md:text-2xl font-light text-white tracking-tight">ANSI Class 4 V</span>
+            </div>
+            <div>
+                <span class="text-[10px] text-neutral-500 block tracking-widest uppercase mb-1">Thermal Coeff.</span>
+                <span class="text-xl md:text-2xl font-light text-white tracking-tight">-0.34% / °C</span>
+            </div>
+            <div>
+                <span class="text-[10px] text-neutral-500 block tracking-widest uppercase mb-1">Grid Lifecycle</span>
+                <span class="text-xl md:text-2xl font-light text-cyber-cyan tracking-tight">30 Yrs Integrity</span>
+            </div>
+        </div>
+    </section>
+
+    <section id="calculator" class="min-h-screen w-full py-24 px-6 md:px-24 flex items-center justify-center relative z-20 bg-[#0a0a0c]/80 backdrop-blur-md border-y border-white/5">
+        <div class="max-w-6xl w-full grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            
+            <div>
+                <span class="text-xs font-bold tracking-[0.3em] text-cyber-cyan uppercase block mb-2">ROI Analytics</span>
+                <h2 class="text-3xl md:text-5xl font-light tracking-tight text-white mb-6">
+                    Performance <span class="font-semibold text-neutral-200">Simulation Engine</span>
+                </h2>
+                <p class="text-neutral-400 text-sm font-light leading-relaxed mb-10 max-w-md">
+                    Input customized spatial footprint bounds to compute your structural output capability and calculate asset amortization cycles.
+                </p>
+
+                <div class="space-y-8">
+                    <div class="space-y-3">
+                        <div class="flex justify-between text-xs tracking-wider uppercase text-neutral-400">
+                            <span class="flex items-center gap-2"><i data-lucide="sliders" class="w-3.5 h-3.5"></i> Total Intended Roof Area</span>
+                            <span id="roofAreaVal" class="text-white font-mono">2,500 SQ. FT.</span>
+                        </div>
+                        <input 
+                            type="range" id="roofArea" min="1000" max="10000" step="250" value="2500"
+                            class="w-full h-1 bg-neutral-800 rounded-lg appearance-none cursor-pointer accent-cyber-cyan"
+                        />
+                    </div>
+
+                    <div class="space-y-3">
+                        <div class="flex justify-between text-xs tracking-wider uppercase text-neutral-400">
+                            <span class="flex items-center gap-2"><i data-lucide="dollar-sign" class="w-3.5 h-3.5"></i> Monthly Energy Expense</span>
+                            <span id="monthlyBillVal" class="text-white font-mono">$350 / MO</span>
+                        </div>
+                        <input 
+                            type="range" id="monthlyBill" min="100" max="1500" step="50" value="350"
+                            class="w-full h-1 bg-neutral-800 rounded-lg appearance-none cursor-pointer accent-cyber-cyan"
+                        />
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div class="glass-card p-8 rounded-sm flex flex-col justify-between h-48">
+                    <i data-lucide="sun" class="text-cyber-cyan w-6 h-6"></i>
+                    <div>
+                        <span class="text-[10px] text-neutral-500 uppercase tracking-widest block mb-1">Est. Generation</span>
+                        <span id="genOutput" class="text-3xl font-light text-white font-mono">35,500 <span class="text-xs text-neutral-400">kWh/Yr</span></span>
+                    </div>
+                </div>
+
+                <div class="glass-card p-8 rounded-sm flex flex-col justify-between h-48">
+                    <i data-lucide="trending-up" class="text-emerald-500 w-6 h-6"></i>
+                    <div>
+                        <span class="text-[10px] text-neutral-500 uppercase tracking-widest block mb-1">Annual Offset</span>
+                        <span id="savingsOutput" class="text-3xl font-light text-white font-mono">$3,570 <span class="text-xs text-neutral-400">/Yr</span></span>
+                    </div>
+                </div>
+
+                <div class="glass-card p-8 rounded-sm flex flex-col justify-between h-48 sm:col-span-2">
+                    <div class="w-full flex justify-between items-center">
+                        <span class="text-[10px] text-neutral-400 uppercase tracking-widest">Net Integrated Capitalized Investment</span>
+                        <span class="px-2 py-0.5 text-[9px] tracking-widest uppercase bg-cyber-cyan/10 text-cyber-cyan rounded">Federal Credits Factored</span>
+                    </div>
+                    <div>
+                        <span id="investmentOutput" class="text-4xl font-light text-white font-mono">$48,750</span>
+                        <span class="text-xs text-neutral-500 block mt-2 font-light">Amortization window optimization curves drop below ~6.2 years.</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="showcase" class="min-h-screen w-full py-24 px-6 md:px-24 bg-gradient-to-b from-[#0a0a0c] to-[#040405] relative z-20">
+        <div class="max-w-7xl mx-auto">
+            <div class="w-full flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-6">
+                <div>
+                    <span class="text-xs font-bold tracking-[0.3em] text-cyber-cyan uppercase block mb-2">Product Deep Dive</span>
+                    <h2 class="text-3xl md:text-5xl font-light tracking-tight text-white">
+                        Engineering <span class="font-semibold text-neutral-200">The Obsidian Tile</span>
+                    </h2>
+                </div>
+                <p class="text-neutral-400 font-light text-sm max-w-sm leading-relaxed">
+                    Every element delivers high structural durability alongside beautiful architectural visual integration.
+                </p>
+            </div>
+
+            <div class="w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                <div class="lg:col-span-5 relative h-[450px] w-full rounded-sm overflow-hidden border border-white/5 bg-neutral-900/40 flex flex-col justify-end p-8">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent z-10"></div>
+                    <div class="z-20">
+                        <span class="text-[10px] uppercase text-cyber-cyan font-mono tracking-widest mb-1">Cross-Section Layer v2.0</span>
+                        <h4 class="text-lg font-medium text-white tracking-wide">High-Density Quartz Armor Coating</h4>
+                    </div>
+                    <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#00f3ff_1px,transparent_1px)] [background-size:16px_16px]"></div>
+                </div>
+
+                <div class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div class="glass-card p-8 rounded-sm">
+                        <span class="text-[10px] text-neutral-500 uppercase tracking-widest block mb-2">Cell Efficiency</span>
+                        <span class="text-3xl font-light text-white block mb-2 font-mono">24.2%</span>
+                        <p class="text-xs text-neutral-400 font-light leading-relaxed">Ultra-pure monocrystalline architecture maximizes capture vectors even in passive light angles.</p>
+                    </div>
+                    <div class="glass-card p-8 rounded-sm">
+                        <span class="text-[10px] text-neutral-500 uppercase tracking-widest block mb-2">Glass Substrate</span>
+                        <span class="text-3xl font-light text-white block mb-2 font-mono">Sol-X Tempered</span>
+                        <p class="text-xs text-neutral-400 font-light leading-relaxed">Engineered with three times the tensile capacity of conventional heavy quarry tile slates.</p>
+                    </div>
+                    <div class="glass-card p-8 rounded-sm">
+                        <span class="text-[10px] text-neutral-500 uppercase tracking-widest block mb-2">Inverter Node topology</span>
+                        <span class="text-3xl font-light text-white block mb-2 font-mono">Micro-Isolated</span>
+                        <p class="text-xs text-neutral-400 font-light leading-relaxed">Decoupled execution matrix routing stops shade drops from limiting the rest of your roof array.</p>
+                    </div>
+                    <div class="glass-card p-8 rounded-sm">
+                        <span class="text-[10px] text-neutral-500 uppercase tracking-widest block mb-2">Wind Resilience</span>
+                        <span class="text-3xl font-light text-white block mb-2 font-mono">Class 4 Hurr.</span>
+                        <p class="text-xs text-neutral-400 font-light leading-relaxed">Tested to reliably withstand standard sustained atmospheric shear stresses up to 160 mph.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="min-h-screen w-full py-24 px-6 md:px-24 flex items-center justify-center relative z-20 bg-background border-t border-white/5">
+        <div class="max-w-xl w-full glass-panel p-8 md:p-12 rounded-sm relative">
+            <div class="absolute top-0 right-12 w-24 h-[1px] bg-gradient-to-r from-transparent via-cyber-cyan to-transparent"></div>
+            
+            <div class="mb-8">
+                <span class="text-xs font-bold tracking-[0.3em] text-cyber-cyan uppercase block mb-2">Initiate Setup</span>
+                <h3 class="text-2xl md:text-3xl font-light tracking-tight text-white">System Configuration</h3>
+            </div>
+
+            <form id="leadForm" class="space-y-6" onsubmit="handleFormSubmit(event)">
+                <div class="space-y-2">
+                    <label class="text-[10px] uppercase text-neutral-400 tracking-widest block">Full Entity Name</label>
+                    <input required type="text" class="w-full bg-neutral-900/50 border border-white/10 rounded-sm px-4 py-3 text-sm text-white focus:outline-none focus:border-cyber-cyan transition-all duration-300 font-light" placeholder="Johnathan Doe">
+                </div>
+
+                <div class="space-y-2">
+                    <label class="text-[10px] uppercase text-neutral-400 tracking-widest block">Digital Communication Node</label>
+                    <input required type="email" class="w-full bg-neutral-900/50 border border-white/10 rounded-sm px-4 py-3 text-sm text-white focus:outline-none focus:border-cyber-cyan transition-all duration-300 font-light" placeholder="j.doe@architecture.com">
+                </div>
+
+                <div class="space-y-2">
+                    <label class="text-[10px] uppercase text-neutral-400 tracking-widest block">Physical Installation ZIP Code</label>
+                    <input required type="text" class="w-full bg-neutral-900/50 border border-white/10 rounded-sm px-4 py-3 text-sm text-white focus:outline-none focus:border-cyber-cyan transition-all duration-300 font-light" placeholder="90210">
+                </div>
+
+                <button type="submit" id="submitBtn" class="w-full py-4 mt-4 bg-gradient-to-r from-neutral-900 via-neutral-800 to-neutral-900 text-white border border-white/10 font-semibold text-xs tracking-widest uppercase rounded-sm hover:border-cyber-cyan/50 transition-all duration-300">
+                    TRANSMIT PROPERTY SPECIFICATIONS
+                </button>
+            </form>
+            <div id="successMsg" class="hidden py-12 text-center space-y-4">
+                <span class="text-cyber-cyan text-lg font-mono block">TRANSMISSION ENCRYPTED & LOGGED</span>
+                <p class="text-neutral-400 text-xs font-light tracking-wide leading-relaxed">
+                    Our structural engineering framework vectors have locked to your geo-coordinates. Expect design proposals shortly.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="w-full border-t border-white/5 py-8 text-center text-[10px] tracking-widest text-neutral-500 backdrop-blur-md bg-black/40 relative z-20">
+        © 2026 AETHER ENERGY INC. ALL RIGHTS RESERVED. ARCHITECTURAL PHOTONS SYSTEM PATENTS PENDING.
+    </footer>
+
+    <script>
+        // --- 1. Initialize Icon Set ---
+        lucide.createIcons();
+
+        // --- 2. Interactive ROI Calculations Logic Matrix ---
+        const roofAreaInput = document.getElementById('roofArea');
+        const monthlyBillInput = document.getElementById('monthlyBill');
+        
+        const roofAreaVal = document.getElementById('roofAreaVal');
+        const monthlyBillVal = document.getElementById('monthlyBillVal');
+        
+        const genOutput = document.getElementById('genOutput');
+        const savingsOutput = document.getElementById('savingsOutput');
+        const investmentOutput = document.getElementById('investmentOutput');
+
+        function updateMetrics() {
+            const area = parseInt(roofAreaInput.value);
+            const bill = parseInt(monthlyBillInput.value);
+
+            // Matrix updates text strings representation values
+            roofAreaVal.innerText = `${area.toLocaleString()} SQ. FT.`;
+            monthlyBillVal.innerText = `$${bill} / MO`;
+
+            // Parametric Equation Algorithms mapping yields
+            const generation = Math.round(area * 14.2);
+            const savings = Math.round(bill * 12 * 0.85);
+            const investment = Math.round(area * 22.5 - 7500);
+
+            genOutput.innerHTML = `${generation.toLocaleString()} <span class="text-xs text-neutral-400">kWh/Yr</span>`;
+            savingsOutput.innerHTML = `$${savings.toLocaleString()} <span class="text-xs text-neutral-400">/Yr</span>`;
+            investmentOutput.innerText = `$${investment.toLocaleString()}`;
+        }
+
+        roofAreaInput.addEventListener('input', updateMetrics);
+        monthlyBillInput.addEventListener('input', updateMetrics);
+
+        // --- 3. Lead Generation Form Handler ---
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            document.getElementById('submitBtn').innerText = "PACKETING METRICS...";
+            setTimeout(() => {
+                document.getElementById('leadForm').classList.add('hidden');
+                document.getElementById('successMsg').classList.remove('hidden');
+            }, 1200);
+        }
+
+        // --- 4. Interactive 3D WebGL Canvas Layer Engine (Three.js) ---
+        const container = document.getElementById('canvas-container');
+        const scene = new THREE.Scene();
+        
+        // Configuration parameters camera tracking
+        const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
+        camera.position.set(0, 3.5, 8);
+
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "high-performance" });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        renderer.shadowMap.enabled = true;
+        container.appendChild(renderer.domElement);
+
+        // Ambience illumination vectors mapping
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.15);
+        scene.add(ambientLight);
+
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 1.2);
+        directionalLight.position.set(5, 12, 5);
+        scene.add(directionalLight);
+
+        // Mouse reactive dynamic light tracking point
+        const reactiveLight = new THREE.PointLight(0x00f3ff, 2.5, 10);
+        reactiveLight.position.set(0, 3, 2);
+        scene.add(reactiveLight);
+
+        // Build 3D House Mesh Substructures Geometry
+        const houseGroup = new THREE.Group();
+        
+        // Base Foundation Platform Block
+        const baseGeo = new THREE.BoxGeometry(4, 2, 4);
+        const baseMat = new THREE.MeshStandardMaterial({ color: 0x18181f, roughness: 0.5, metalness: 0.2 });
+        const foundation = new THREE.Mesh(baseGeo, baseMat);
+        foundation.position.y = 1;
+        houseGroup.add(foundation);
+
+        // High Efficiency Solar Glass Roof Shape cone
+        const roofGeo = new THREE.ConeGeometry(3.3, 1.5, 4);
+        const roofMat = new THREE.MeshStandardMaterial({ 
+            color: 0x002d44, 
+            roughness: 0.1, 
+            metalness: 0.9,
+            emissive: 0x003355,
+            emissiveIntensity: 0.3
+        });
+        const roof = new THREE.Mesh(roofGeo, roofMat);
+        roof.position.y = 2.75;
+        roof.rotation.y = Math.PI / 4; // Align roof face panels straight out front
+        houseGroup.add(roof);
+
+        // Architectural Modernist Window Glass Layer
+        const windowGeo = new THREE.PlaneGeometry(2.2, 1.1);
+        const windowMat = new THREE.MeshStandardMaterial({ color: 0x00f3ff, transparent: true, opacity: 0.25, roughness: 0.01 });
+        const windowMesh = new THREE.Mesh(windowGeo, windowMat);
+        windowMesh.position.set(0, 1.1, 2.01);
+        houseGroup.add(windowMesh);
+
+        scene.add(houseGroup);
+        houseGroup.position.set(0, -1, 0);
+
+        // Floating Photonic Energy Flow Particle System Array
+        const particleCount = 90;
+        const particleGeo = new THREE.BufferGeometry();
+        const positions = new Float32Array(particleCount * 3);
+
+        for(let i=0; i<particleCount*3; i+=3) {
+            positions[i] = (Math.random() - 0.5) * 8;
+            positions[i+1] = Math.random() * 6;
+            positions[i+2] = (Math.random() - 0.5) * 8;
+        }
+
+        particleGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+        const particleMat = new THREE.PointsMaterial({
+            color: 0x00f3ff,
+            size: 0.04,
+            transparent: true,
+            opacity: 0.6,
+            blending: THREE.AdditiveBlending
+        });
+        const energyParticles = new THREE.Points(particleGeo, particleMat);
+        scene.add(energyParticles);
+
+        // Mouse Move Position Interpolation Tracking Vector
+        let mouseX = 0;
+        let mouseY = 0;
+        let targetRotationX = 0;
+        let targetRotationY = 0;
+
+        window.addEventListener('mousemove', (e) => {
+            mouseX = (e.clientX / window.innerWidth) * 2 - 1;
+            mouseY = -(e.clientY / window.innerHeight) * 2 + 1;
+            
+            targetRotationY = mouseX * 0.3;
+            targetRotationX = -mouseY * 0.15;
+        });
+
+        // Frame Rendering Clock Lifecycle loop
+        const clock = new THREE.Clock();
+
+        function animateFrame() {
+            requestAnimationFrame(animateFrame);
+            const elapsed = clock.getElapsedTime();
+
+            // Linear smoothing for rotation updates
+            houseGroup.rotation.y += (targetRotationY - houseGroup.rotation.y) * 0.05 + 0.0015;
+            houseGroup.rotation.x += (targetRotationX - houseGroup.rotation.x) * 0.05;
+
+            // Move interactive light anchor points relative to pointer offsets
+            reactiveLight.position.x = THREE.MathUtils.lerp(reactiveLight.position.x, mouseX * 4, 0.08);
+            reactiveLight.position.y = THREE.MathUtils.lerp(reactiveLight.position.y, (mouseY * 3) + 2, 0.08);
+
+            // Animate global photon particles rising upward from roof surface
+            const posAttr = particleGeo.attributes.position;
+            for(let i=1; i<posAttr.count*3; i+=3) {
+                posAttr.array[i] += 0.012;
+                if(posAttr.array[i] > 6) {
+                    posAttr.array[i] = 0; // Return base lifecycle ground loop
+                }
+            }
+            posAttr.needsUpdate = true;
+
+            renderer.render(scene, camera);
+        }
+        animateFrame();
+
+        // Responsive Engine Redraw Adjustment Boundary Matrix
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+    </script>
+</body>
+</html>

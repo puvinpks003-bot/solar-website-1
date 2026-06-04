@@ -1,35 +1,94 @@
 {% extends 'solar_web/base.html' %}
 {% block content %}
-<section class="py-20 px-4 sm:px-6 bg-slate-950">
-    <div class="max-w-7xl mx-auto space-y-12">
-        <div class="space-y-2 text-center md:text-left">
-            <span class="text-amber-400 font-mono text-xs uppercase font-bold tracking-widest">// Field Verified Assets</span>
-            <h1 class="text-3xl sm:text-5xl font-black text-white tracking-tight">Active Generation Deployments</h1>
+
+<section class="py-24 px-4 sm:px-6 bg-slate-950 relative min-h-screen overflow-hidden">
+    <div class="absolute inset-0 opacity-10 bg-[linear-gradient(to_right,#1e293b_1px,transparent_1px),linear-gradient(to_bottom,#1e293b_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_60%_at_50%_50%,#000_70%,transparent_100%)] pointer-events-none z-0"></div>
+    <div class="absolute top-1/4 -left-40 w-96 h-96 bg-amber-500/5 rounded-full blur-[120px] pointer-events-none"></div>
+    <div class="absolute bottom-1/4 -right-40 w-96 h-96 bg-emerald-500/5 rounded-full blur-[120px] pointer-events-none"></div>
+
+    <div class="max-w-7xl mx-auto space-y-16 relative z-10">
+        <div class="space-y-3 text-center max-w-3xl mx-auto">
+            <span class="inline-flex items-center gap-2 bg-amber-500/10 text-amber-400 font-mono text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full border border-amber-500/20">
+                <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span>Field-Verified Assets
+            </span>
+            <h1 class="text-4xl sm:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-200 to-slate-400 tracking-tight">
+                Active Generation Deployments
+            </h1>
+            <p class="text-slate-400 text-xs sm:text-sm font-light leading-relaxed max-w-2xl mx-auto">
+                Cross-referenced utility grid metrics and premium installations delivering high-yield performance parameters across localized geographic coordinates.
+            </p>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {% for project in mw_projects %}
-            <div class="bg-slate-900/40 rounded-2xl border border-slate-800/80 overflow-hidden hover:border-amber-500/30 transition-all flex flex-col justify-between">
-                <div class="p-6 space-y-4">
-                    <div class="flex justify-between items-start">
-                        <span class="px-2.5 py-1 bg-slate-950 text-amber-400 font-mono text-[9px] font-bold uppercase tracking-wider rounded border border-slate-800">
+            <div class="group bg-slate-900/30 backdrop-blur-md rounded-2xl border border-slate-800/60 overflow-hidden hover:border-amber-500/30 shadow-2xl transition-all duration-500 flex flex-col justify-between h-full hover:shadow-amber-500/[0.02]">
+                
+                <div class="relative aspect-[16/10] overflow-hidden bg-slate-950/40 border-b border-slate-900">
+                    <div class="absolute inset-0 bg-slate-950/20 z-10 group-hover:bg-transparent transition-colors duration-500"></div>
+                    {% if project.image %}
+                        <img src="{{ project.image.url }}" alt="{{ project.title }}" class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out">
+                    {% else %}
+                        <img src="https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&fit=crop&w=600&q=80" alt="SIP INFRA Solar Asset" class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out opacity-80 filter brightness-[0.85]">
+                    {% endif %}
+                    
+                    <div class="absolute top-4 left-4 right-4 flex justify-between items-center z-20">
+                        <span class="px-2.5 py-1.5 bg-slate-950/90 backdrop-blur-md text-amber-400 font-mono text-[9px] font-black uppercase tracking-widest rounded-lg border border-slate-800 shadow-md">
                             {{ project.get_category_display }}
                         </span>
-                        <span class="text-[10px] text-emerald-400 font-mono font-bold uppercase bg-emerald-500/5 px-2 py-0.5 rounded">Live Active Sync</span>
+                        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-emerald-950/80 backdrop-blur-md text-emerald-400 font-mono text-[9px] font-bold uppercase tracking-wide rounded-md border border-emerald-500/20 shadow-sm">
+                            <span class="w-1 h-1 rounded-full bg-emerald-400 animate-ping"></span>Live Sync
+                        </span>
                     </div>
-                    <div class="space-y-1">
-                        <h3 class="text-xl font-bold text-white tracking-tight">{{ project.title }}</h3>
-                        <p class="text-xs text-slate-400 font-mono">{{ project.location }} // Operational Rating: {{ project.capacity_kw }} kWp</p>
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/10 to-transparent z-10 opacity-90"></div>
+                </div>
+
+                <div class="p-6 space-y-4 flex-grow flex flex-col justify-between bg-gradient-to-b from-slate-950/20 to-slate-950/50">
+                    <div class="space-y-3">
+                        <h3 class="text-xl font-bold text-white tracking-tight leading-snug group-hover:text-amber-400 transition-colors duration-300">
+                            {{ project.title }}
+                        </h3>
+                        
+                        <div class="flex flex-wrap items-center gap-3 text-[10px] font-mono font-bold tracking-wide text-slate-400 bg-slate-950/80 border border-slate-900 px-3 py-1.5 rounded-lg w-max shadow-inner">
+                            <span class="text-amber-400 uppercase">
+                                {% if project.capacity_kw >= 1000 %}
+                                    {{ project.capacity_kw|yesno:",,0" }}<script>
+                                        (function() {
+                                            const kwValue = parseFloat("{{ project.capacity_kw }}") || 0;
+                                            document.write((kwValue / 1000).toFixed(2).replace(/\.00$/, '') + " MWp");
+                                        })();
+                                    </script>
+                                {% else %}
+                                    {{ project.capacity_kw }} kWp
+                                {% endif %}
+                            </span>
+                            <span class="w-1 h-1 rounded-full bg-slate-800"></span>
+                            <span class="truncate max-w-[140px] text-slate-300">{{ project.location }}</span>
+                        </div>
+                        
+                        <p class="text-slate-400 text-xs leading-relaxed font-light font-sans pt-1 line-clamp-3">
+                            {{ project.description }}
+                        </p>
                     </div>
-                    <p class="text-slate-400 text-xs leading-relaxed font-sans font-light">{{ project.description }}</p>
                 </div>
-                <div class="p-6 pt-0 border-t border-slate-800/50 mt-4 bg-slate-950/20 font-mono text-[10px] text-slate-500 flex justify-between">
-                    <span>Performance index: 99.2%</span>
-                    <span class="text-amber-400">View Analytics Data</span>
+
+                <div class="px-6 py-4 border-t border-slate-900 bg-slate-950/60 font-mono text-[10px] text-slate-500 flex justify-between items-center">
+                    <span class="flex items-center gap-1">PR_INDEX: <span class="text-slate-300 font-bold">99.2%</span></span>
+                    <a href="#" class="text-amber-400/80 group-hover:text-amber-400 font-bold transition-colors flex items-center gap-0.5 group-hover:underline cursor-pointer">
+                        View Analytics Data &rarr;
+                    </a>
                 </div>
+            </div>
+            {% empty %}
+            <div class="col-span-1 md:col-span-2 lg:col-span-3 text-center p-12 glass-panel rounded-2xl border border-slate-800/80 max-w-md mx-auto">
+                <div class="w-12 h-12 rounded-xl bg-slate-950/80 border border-slate-900 flex items-center justify-center mx-auto mb-4 text-slate-600">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v6a2 2 0 012-2m14-10V7a2 2 0 00-2-2H7a2 2 0 00-2 2v4m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+                </div>
+                <h3 class="text-sm font-bold text-slate-200">No Asset Records Active</h3>
+                <p class="text-slate-500 font-light text-xs mt-1">Operational pipeline parameters currently executing system updates. Re-querying soon.</p>
             </div>
             {% endfor %}
         </div>
     </div>
 </section>
+
 {% endblock %}

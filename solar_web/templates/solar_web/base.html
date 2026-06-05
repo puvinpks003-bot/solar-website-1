@@ -264,148 +264,91 @@
     </footer>
 
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const menuToggleBtn = document.getElementById('menu-toggle-btn');
-            const mobileMenu = document.getElementById('mobile-menu');
-            const iconPath = document.getElementById('menu-icon-path');
-            
-            function toggleMobileMenu() {
-                if (mobileMenu.classList.contains('hidden')) {
-                    mobileMenu.classList.remove('hidden');
-                    setTimeout(() => {
-                        mobileMenu.classList.remove('scale-y-95', 'opacity-0');
-                        mobileMenu.classList.add('scale-y-100', 'opacity-100');
-                    }, 10);
-                    iconPath.setAttribute('d', 'M6 18L18 6M6 6l12 12');
-                } else {
-                    mobileMenu.classList.remove('scale-y-100', 'opacity-100');
-                    mobileMenu.classList.add('scale-y-95', 'opacity-0');
-                    setTimeout(() => {
-                        mobileMenu.classList.add('hidden');
-                    }, 200);
-                    iconPath.setAttribute('d', 'M4 6h16M4 12h16M4 18h16');
-                }
-            }
+document.addEventListener("DOMContentLoaded", () => {
+    const mobileMenu = document.getElementById('mobile-menu');
+    const menuToggleBtn = document.getElementById('menu-toggle-btn');
+    const iconPath = document.getElementById('menu-icon-path');
+    const navLinks = document.querySelectorAll('.nav-item, .mobile-nav-item');
+    const solutionsBtnText = document.getElementById('solutions-btn-text');
+    const solutionsBtn = document.getElementById('solutions-dropdown-btn');
 
-            if (menuToggleBtn) {
-                menuToggleBtn.addEventListener('click', toggleMobileMenu);
-            }
-
-            const mobileLinksList = document.querySelectorAll('.mobile-nav-item');
-            mobileLinksList.forEach(link => {
-                link.addEventListener('click', () => {
-                    if (!mobileMenu.classList.contains('hidden')) {
-                        toggleMobileMenu();
-                    }
-                });
-            });
-
-            const dskHome = document.getElementById('nav-home-link');
-            const mblHome = document.getElementById('mobile-home-link');
-
-            // HIGH-CONTRAST DYNAMIC HIGH-SPECIFICITY PILL RE-PAINT ENGINE
-            function runActiveHighlighter() {
-                const path = window.location.pathname;
-                const hash = window.location.hash;
-                const solutionsBtnText = document.getElementById('solutions-btn-text');
-
-                if (solutionsBtnText) {
-                    solutionsBtnText.innerText = "Our Solutions";
-                }
-
-                // Strip active pill style architecture cleanly across links except home
-                document.querySelectorAll(".nav-item, .mobile-nav-item").forEach(el => {
-                    if (el !== dskHome && el !== mblHome) {
-                        el.classList.remove("nav-item-active-pill");
-                        el.style.setProperty('color', '', 'important');
-                        el.style.setProperty('text-shadow', '', 'important');
-                        el.style.setProperty('background-color', '', 'important');
-                        el.style.setProperty('border-radius', '', 'important');
-                        el.style.setProperty('border', '', 'important');
-                    }
-                });
-
-                // Targets active endpoints safely
-                const allLinks = document.querySelectorAll(
-                    "#desktop-nav-links .nav-item:not(#nav-home-link), " +
-                    ".dropdown-panel .nav-item, " +
-                    "#mobile-nav-links .mobile-nav-item:not(#mobile-home-link)"
-                );
-                
-                let matched = false;
-
-                allLinks.forEach(link => {
-                    const href = link.getAttribute("href");
-                    if (!href) return;
-
-                    if (hash && href.includes(hash)) {
-                        link.classList.add("nav-item-active-pill");
-                        matched = true;
-                    } else if (!hash && path !== '/' && href.includes(path) && !href.includes('#')) {
-                        link.classList.add("nav-item-active-pill");
-                        
-                        if (link.closest('.dropdown-panel')) {
-                            const parentBtn = link.closest('.dropdown-wrapper').querySelector('button');
-                            if (parentBtn && solutionsBtnText) {
-                                solutionsBtnText.innerText = link.innerText.trim();
-                                parentBtn.classList.add("nav-item-active-pill");
-                            }
-                        }
-                        matched = true;
-                    }
-                });
-
-                // HIGH-ACCURACY SCROLL ENGINE DETECTOR FOR ROOT LANDINGS
-                // Automatically evaluates if home tab turns active when at top viewports
-                if (window.scrollY === 0 && (path === '/' || path === '' || hash === '#home')) {
-                    [dskHome, mblHome].forEach(el => {
-                        if (el) el.classList.add("nav-item-active-pill");
-                    });
-                } else {
-                    [dskHome, mblHome].forEach(el => {
-                        if (el && !el.matches(':hover')) {
-                            el.classList.remove("nav-item-active-pill");
-                            el.style.setProperty('color', '', 'important');
-                            el.style.setProperty('text-shadow', '', 'important');
-                            el.style.setProperty('background-color', '', 'important');
-                            el.style.setProperty('border', '', 'important');
-                        }
-                    });
-                }
-            }
-
-            // MOUSE HOVER STATE CONTROL MATRIX
-            function forceHomeHoverActive(el, isHover) {
-                if (!el) return;
-                if (isHover) {
-                    el.classList.add("nav-item-active-pill");
-                } else {
-                    // Instantly evaluate viewport matrix configurations on mouse leave
-                    if (window.scrollY > 0) {
-                        el.classList.remove("nav-item-active-pill");
-                        el.style.setProperty('color', '', 'important');
-                        el.style.setProperty('text-shadow', '', 'important');
-                        el.style.setProperty('background-color', '', 'important');
-                        el.style.setProperty('border', '', 'important');
-                    }
-                    runActiveHighlighter();
-                }
-            }
-
-            if (dskHome) {
-                dskHome.addEventListener('mouseenter', () => forceHomeHoverActive(dskHome, true));
-                dskHome.addEventListener('mouseleave', () => forceHomeHoverActive(dskHome, false));
-            }
-            if (mblHome) {
-                mblHome.addEventListener('mouseenter', () => forceHomeHoverActive(mblHome, true));
-                mblHome.addEventListener('mouseleave', () => forceHomeHoverActive(mblHome, false));
-            }
-
-            // Sync dynamic viewport position coordinates
-            window.addEventListener("scroll", runActiveHighlighter, { passive: true });
-            window.addEventListener("hashchange", runActiveHighlighter);
-            runActiveHighlighter();
+    // --- UTILITIES ---
+    function removeActiveStyles() {
+        navLinks.forEach(el => {
+            el.classList.remove("nav-item-active-pill");
+            el.style.cssText = ''; // Clear inline styles
         });
-    </script>
+        if (solutionsBtn) solutionsBtn.classList.remove("nav-item-active-pill");
+    }
+
+    function toggleMobileMenu() {
+        const isHidden = mobileMenu.classList.contains('hidden');
+        mobileMenu.classList.toggle('hidden', !isHidden);
+        setTimeout(() => {
+            mobileMenu.classList.toggle('scale-y-100', isHidden);
+            mobileMenu.classList.toggle('opacity-100', isHidden);
+            mobileMenu.classList.toggle('scale-y-95', !isHidden);
+            mobileMenu.classList.toggle('opacity-0', !isHidden);
+        }, 10);
+        iconPath.setAttribute('d', isHidden ? 'M6 18L18 6M6 6l12 12' : 'M4 6h16M4 12h16M4 18h16');
+    }
+
+    // --- PAGE/URL STATE MATCHER (For sub-pages) ---
+    function updateActiveByPath() {
+        const path = window.location.pathname;
+        let matched = false;
+
+        navLinks.forEach(link => {
+            const href = link.getAttribute('href');
+            if (!href || href === "#") return;
+
+            // Check if current path matches link URL (ignoring hash)
+            if (path !== '/' && href.includes(path) && !href.includes('#')) {
+                link.classList.add("nav-item-active-pill");
+                matched = true;
+
+                // If inside dropdown, update parent button text/state
+                if (link.closest('.dropdown-panel')) {
+                    if (solutionsBtnText) solutionsBtnText.innerText = link.innerText.trim();
+                    if (solutionsBtn) solutionsBtn.classList.add("nav-item-active-pill");
+                }
+            }
+        });
+        return matched;
+    }
+
+    // --- SCROLLSPY (For Home page sections) ---
+    const sections = document.querySelectorAll('section[id], div[id="solar_calculator"]');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                removeActiveStyles();
+                const id = entry.target.getAttribute('id');
+                document.querySelectorAll(`a[href*="#${id}"]`).forEach(link => {
+                    link.classList.add("nav-item-active-pill");
+                });
+            }
+        });
+    }, { root: null, rootMargin: '-30% 0px -60% 0px', threshold: 0 });
+
+    // Initialization
+    if (menuToggleBtn) menuToggleBtn.addEventListener('click', toggleMobileMenu);
+    
+    // Only run scrollspy if we are on the homepage or hash links exist
+    if (sections.length > 0) {
+        sections.forEach(s => observer.observe(s));
+    }
+
+    // Run path-based check first; if no sub-page match, fallback to scrollspy behavior
+    if (!updateActiveByPath()) {
+        // Add click listeners for manual override
+        navLinks.forEach(link => link.addEventListener('click', () => {
+            removeActiveStyles();
+            link.classList.add("nav-item-active-pill");
+            if (mobileMenu && !mobileMenu.classList.contains('hidden')) toggleMobileMenu();
+        }));
+    }
+});
+</script>
 </body>
 </html>

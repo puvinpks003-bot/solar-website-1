@@ -1,27 +1,167 @@
 {% extends 'solar_web/base.html' %}
 {% block content %}
-<section class="py-20 px-4 sm:px-6 bg-slate-950">
-    <div class="max-w-6xl mx-auto space-y-12">
-        <div class="text-center space-y-4">
-            <span class="text-xs font-mono font-bold text-amber-400 uppercase tracking-widest">// Intelligent Residential Infrastructure</span>
-            <h1 class="text-3xl sm:text-5xl font-black text-white">Smart Residential Rooftop Micro-Grids</h1>
-            <p class="text-slate-400 text-sm max-w-xl mx-auto">Optimize your home energy footprint. Eliminate high domestic utility bills using grid-tied architectures and high-cycle storage options.</p>
-        </div>
+<style>
+.page-hero{position:relative;padding:clamp(3rem, 6vw, 5rem) clamp(1rem, 4vw, 2rem) clamp(2rem, 5vw, 4rem);overflow:hidden;border-bottom:1px solid var(--clr-border);display:flex;align-items:center}
+.page-hero-bg{position:absolute;inset:0;z-index:0;pointer-events:none}
+.page-hero-blob{position:absolute;border-radius:50%;filter:blur(100px);pointer-events:none}
+.page-hero-blob-1{width:clamp(300px,50vw,600px);height:clamp(300px,50vw,600px);top:-20%;right:-10%;background:radial-gradient(circle,rgba(255,193,7,0.1) 0%,transparent 70%);animation:blob-drift 14s ease-in-out infinite alternate}
+.page-hero-blob-2{width:clamp(200px,35vw,400px);height:clamp(200px,35vw,400px);bottom:-10%;left:-5%;background:radial-gradient(circle,rgba(0,207,255,0.06) 0%,transparent 70%);animation:blob-drift 18s ease-in-out infinite alternate-reverse}
+@keyframes blob-drift{from{transform:translate(0,0) scale(1)}to{transform:translate(20px,-20px) scale(1.06)}}
+.page-hero-grid{position:absolute;inset:0;background-image:linear-gradient(to right,rgba(255,255,255,0.03) 1px,transparent 1px),linear-gradient(to bottom,rgba(255,255,255,0.03) 1px,transparent 1px);background-size:3.5rem 3.5rem}
+.page-hero-inner{max-width:var(--container);margin:0 auto;width:100%;position:relative;z-index:2;text-align:center}
+.page-hero-eyebrow{display:inline-flex;align-items:center;gap:0.5rem;font-family:var(--font-mono);font-size:0.62rem;font-weight:700;text-transform:uppercase;letter-spacing:0.15em;color:var(--clr-text-3);margin-bottom:var(--sp-3)}
+.page-hero-eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--clr-gold);animation:pulse-dot 2s ease infinite}
+@keyframes pulse-dot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.5;transform:scale(0.7)}}
+.page-hero-title{font-family:var(--font-display);font-size:var(--text-6xl);font-weight:900;letter-spacing:-0.03em;line-height:1.05;text-transform:uppercase;background:linear-gradient(160deg,#ffffff 20%,#94a3b8 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:var(--sp-3)}
+.page-hero-subtitle{font-size:var(--text-base);color:var(--clr-text-2);line-height:1.75;max-width:58ch;margin:0 auto var(--sp-5)}
+.page-hero-cta{display:flex;gap:0.75rem;justify-content:center;flex-wrap:wrap}
+.features-section{padding:var(--sp-12) clamp(1rem,4vw,2rem)}
+.features-inner{max-width:var(--container);margin:0 auto}
+.features-grid-3{display:grid;grid-template-columns:1fr;gap:var(--sp-4)}
+@media(min-width:640px){.features-grid-3{grid-template-columns:1fr 1fr}}
+@media(min-width:1024px){.features-grid-3{grid-template-columns:1fr 1fr 1fr}}
+.feature-card{background:linear-gradient(135deg,rgba(7,11,23,0.97) 0%,rgba(15,23,42,0.94) 100%);border:1px solid var(--clr-border-md);border-radius:var(--radius-xl);padding:var(--sp-5) var(--sp-4);display:flex;flex-direction:column;gap:var(--sp-2);transition:border-color var(--transition),box-shadow var(--transition),transform var(--transition);position:relative;overflow:hidden}
+.feature-card:hover{border-color:rgba(255,193,7,0.25);box-shadow:0 12px 40px rgba(255,193,7,0.06);transform:translateY(-4px)}
+.feature-card-icon{width:44px;height:44px;border-radius:var(--radius-md);background:rgba(255,193,7,0.08);border:1px solid rgba(255,193,7,0.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-bottom:0.25rem}
+.feature-card-icon svg{width:22px;height:22px;color:var(--clr-gold);stroke:currentColor;fill:none}
+.feature-card h3{font-family:var(--font-display);font-size:var(--text-lg);font-weight:700;color:var(--clr-text-1);letter-spacing:-0.01em;line-height:1.3}
+.feature-card p{font-size:var(--text-xs);color:var(--clr-text-2);line-height:1.75;flex:1}
+.cta-banner{max-width:var(--container);margin:0 auto var(--sp-12);border-radius:var(--radius-xl);background:linear-gradient(135deg,rgba(7,11,23,0.98),rgba(15,23,42,0.95));border:1px solid var(--clr-border-md);padding:clamp(var(--sp-5),6vw,var(--sp-10)) clamp(var(--sp-4),5vw,var(--sp-8));display:flex;flex-direction:column;align-items:center;text-align:center;gap:var(--sp-4);position:relative;overflow:hidden}
+.cta-banner::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:70%;height:1px;background:linear-gradient(90deg,transparent,rgba(255,193,7,0.5),transparent)}
+@media(min-width:768px){.cta-banner{flex-direction:row;text-align:left}}
+.cta-banner-text{flex:1}
+.cta-banner-text h3{font-family:var(--font-display);font-size:var(--text-3xl);font-weight:900;text-transform:uppercase;letter-spacing:-0.02em;color:var(--clr-text-1);margin-bottom:0.5rem}
+.cta-banner-text p{font-size:var(--text-sm);color:var(--clr-text-2);line-height:1.7;max-width:52ch}
+.cta-banner-actions{display:flex;gap:0.75rem;flex-wrap:wrap;flex-shrink:0;justify-content:center}
+@media(min-width:768px){.cta-banner-actions{justify-content:flex-end}}
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 font-mono text-xs">
-            <div class="p-6 bg-slate-900 rounded-xl border border-slate-800">
-                <div class="text-amber-400 text-lg font-bold mb-2">INTELLIGENT NET METERING</div>
-                <p class="text-slate-400 leading-relaxed font-sans text-xs">Automatically export excess daytime generation back into the regional utility grid, accumulating power credits that lower your evening consumption expenses.</p>
+/* Savings table */
+.savings-table { width:100%; border-collapse:collapse; margin-top:var(--sp-4); }
+.savings-table th { font-family:var(--font-mono); font-size:0.6rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:var(--clr-text-3); padding:0.75rem var(--sp-2); border-bottom:1px solid var(--clr-border); text-align:left; }
+.savings-table td { font-size:var(--text-xs); color:var(--clr-text-2); padding:0.75rem var(--sp-2); border-bottom:1px solid rgba(255,255,255,0.04); }
+.savings-table td.highlight { color:var(--clr-gold); font-family:var(--font-mono); font-weight:700; }
+.savings-table-card { background:linear-gradient(135deg,rgba(7,11,23,0.97),rgba(15,23,42,0.94)); border:1px solid var(--clr-border-md); border-radius:var(--radius-xl); padding:var(--sp-5) var(--sp-4); overflow-x:auto; }
+</style>
+
+<section class="page-hero" aria-label="Residential Solar Solutions">
+    <div class="page-hero-bg">
+        <div class="page-hero-grid"></div>
+        <div class="page-hero-blob page-hero-blob-1"></div>
+        <div class="page-hero-blob page-hero-blob-2"></div>
+    </div>
+    <div class="page-hero-inner reveal">
+        <div class="page-hero-eyebrow"><span class="dot"></span> Intelligent Residential Infrastructure</div>
+        <h1 class="page-hero-title">Smart Residential<br>Rooftop Micro-Grids</h1>
+        <p class="page-hero-subtitle">Optimize your home energy footprint. Eliminate high domestic utility bills using grid-tied architectures, government subsidies up to ₹78,000, and high-cycle storage options.</p>
+        <div class="page-hero-cta">
+            <a href="https://wa.me/916381127757?text=Hi%20SIP%20INFRA!%20I%20am%20interested%20in%20a%20solar%20quote." target="_blank" class="btn btn-gold">Get Free Assessment</a>
+            <a href="{% url 'subsidy' %}" class="btn btn-dark">Check Your Subsidy</a>
+        </div>
+    </div>
+</section>
+
+<!-- Savings Reference Table -->
+<div style="padding:var(--sp-6) clamp(1rem,4vw,2rem);">
+    <div class="features-inner">
+        <div class="section-header reveal">
+            <div class="section-eyebrow"><span class="eyebrow-dot"></span> Residential Reference Guide</div>
+            <h2 class="section-title"><span class="gradient-text">System Size vs</span> Savings Matrix</h2>
+        </div>
+        <div class="savings-table-card reveal">
+            <table class="savings-table">
+                <thead>
+                    <tr>
+                        <th>System Size</th>
+                        <th>Panels</th>
+                        <th>Monthly Generation</th>
+                        <th>Monthly Savings</th>
+                        <th>Central Subsidy</th>
+                        <th>Payback Period</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>1 kW</td><td>2 panels</td><td>120 Units</td><td class="highlight">₹960</td><td class="highlight">₹30,000</td><td>4–5 years</td></tr>
+                    <tr><td>2 kW</td><td>4 panels</td><td>240 Units</td><td class="highlight">₹1,920</td><td class="highlight">₹60,000</td><td>4–5 years</td></tr>
+                    <tr><td>3 kW</td><td>6 panels</td><td>360 Units</td><td class="highlight">₹2,880</td><td class="highlight">₹78,000</td><td>3–4 years</td></tr>
+                    <tr><td>5 kW</td><td>10 panels</td><td>600 Units</td><td class="highlight">₹4,800</td><td class="highlight">₹78,000</td><td>3–4 years</td></tr>
+                    <tr><td>10 kW</td><td>18 panels</td><td>1,200 Units</td><td class="highlight">₹9,600</td><td class="highlight">₹78,000</td><td>3–4 years</td></tr>
+                </tbody>
+            </table>
+            <p style="font-family:var(--font-mono);font-size:0.58rem;color:var(--clr-text-3);margin-top:var(--sp-2);text-align:center;">* Based on ₹8/unit tariff and 4 peak sun hours/day. Subsidy as per PM Surya Ghar 2024 scheme.</p>
+        </div>
+    </div>
+</div>
+
+<section class="features-section" aria-labelledby="residential-features-heading">
+    <div class="features-inner">
+        <div class="section-header reveal">
+            <div class="section-eyebrow"><span class="eyebrow-dot"></span> Smart Home Energy</div>
+            <h2 class="section-title" id="residential-features-heading"><span class="gradient-text">Everything Your Home</span> Solar System Includes</h2>
+        </div>
+        <div class="features-grid-3">
+            <div class="feature-card stagger-item">
+                <div class="feature-card-icon">
+                    <svg stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                </div>
+                <h3>Intelligent Net Metering</h3>
+                <p>Automatically export excess daytime generation back into the regional utility grid, accumulating power credits that lower your evening and night-time consumption expenses to near zero.</p>
             </div>
-            <div class="p-6 bg-slate-900 rounded-xl border border-slate-800">
-                <div class="text-amber-400 text-lg font-bold mb-2">HYBRID ENERGY STORAGE</div>
-                <p class="text-slate-400 leading-relaxed font-sans text-xs">Integrate advanced high-cycle lithium iron phosphate battery storage cells to maintain consistent home power availability during monsoon seasons or line faults.</p>
+            <div class="feature-card stagger-item">
+                <div class="feature-card-icon">
+                    <svg stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18"/></svg>
+                </div>
+                <h3>Hybrid Energy Storage</h3>
+                <p>Integrate advanced high-cycle LiFePO4 battery storage cells (3000+ cycles) to maintain consistent home power availability during monsoon seasons, TANGEDCO outages, or grid faults.</p>
             </div>
-            <div class="p-6 bg-slate-900 rounded-xl border border-slate-800">
-                <div class="text-amber-400 text-lg font-bold mb-2">APP GENERATION LOGGING</div>
-                <p class="text-slate-400 leading-relaxed font-sans text-xs">Monitor household generation arrays, energy diversion metrics, and active financial savings structures in real time using a clean smartphone interface.</p>
+            <div class="feature-card stagger-item">
+                <div class="feature-card-icon">
+                    <svg stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+                </div>
+                <h3>App-Based Generation Logging</h3>
+                <p>Monitor household generation arrays, energy diversion metrics, and active financial savings in real time using a clean smartphone interface. Export monthly reports for tax and subsidy documentation.</p>
+            </div>
+            <div class="feature-card stagger-item">
+                <div class="feature-card-icon">
+                    <svg stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                </div>
+                <h3>PM Surya Ghar Subsidy: Up to ₹78,000</h3>
+                <p>SIP INFRA handles the complete subsidy application process — online registration, DISCOM inspection coordination, net-meter installation, and DBT fund transfer directly to your bank account.</p>
+            </div>
+            <div class="feature-card stagger-item">
+                <div class="feature-card-icon">
+                    <svg stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                </div>
+                <h3>Lightweight Rooftop Engineering</h3>
+                <p>Residential arrays use aluminium rail mounting systems with non-penetrating ballast design. Compatible with RCC, asbestos, and Mangalore tile roofs — no structural modifications required.</p>
+            </div>
+            <div class="feature-card stagger-item">
+                <div class="feature-card-icon">
+                    <svg stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                </div>
+                <h3>3-Day Installation Turnaround</h3>
+                <p>From site survey to final commissioning, residential solar systems are typically installed and energized within 3 working days by our certified installation teams — with zero disruption to your daily routine.</p>
             </div>
         </div>
     </div>
 </section>
+
+<div class="cta-banner reveal" style="padding-left:clamp(1rem,4vw,2rem);padding-right:clamp(1rem,4vw,2rem);">
+    <div class="cta-banner-text">
+        <h3>Zero Electricity Bill Starts Here</h3>
+        <p>Get a free site assessment, subsidy eligibility check, and custom ROI projection for your home — completely free of charge, no commitment required.</p>
+    </div>
+    <div class="cta-banner-actions">
+        <a href="https://wa.me/916381127757?text=Hi%20SIP%20INFRA!%20I%20am%20interested%20in%20a%20solar%20quote." target="_blank" class="btn btn-gold">Book Free Home Visit →</a>
+        <a href="{% url 'home' %}#solar_calculator" class="btn btn-dark">Run Savings Calculator</a>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    if (typeof gsap === 'undefined') { document.querySelectorAll('.reveal,.stagger-item').forEach(el => { el.style.opacity=1; el.style.transform='none'; }); return; }
+    gsap.registerPlugin(ScrollTrigger);
+    gsap.utils.toArray('.reveal').forEach(el => { gsap.to(el, { opacity:1, y:0, duration:0.9, ease:'power3.out', scrollTrigger:{ trigger:el, start:'top 85%', once:true } }); });
+    gsap.utils.toArray('.stagger-item').forEach((el,i) => { gsap.to(el, { opacity:1, y:0, duration:0.7, delay:i*0.08, ease:'power3.out', scrollTrigger:{ trigger:el, start:'top 90%', once:true } }); });
+});
+</script>
 {% endblock %}

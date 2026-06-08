@@ -1,29 +1,133 @@
 {% extends 'solar_web/base.html' %}
 {% block content %}
-<section class="py-20 px-4 sm:px-6 bg-slate-950">
-    <div class="max-w-6xl mx-auto space-y-12">
-        <div class="text-center max-w-3xl mx-auto space-y-4">
-            <span class="text-amber-500 font-mono text-xs uppercase tracking-widest">Asset Lifecycle Management</span>
-            <h1 class="text-3xl sm:text-5xl font-black text-white">Preventative Asset Operations & O&M</h1>
-            <p class="text-slate-400 text-xs sm:text-sm">Solar arrays operate in demanding environments. Our ongoing operations and maintenance management framework protects generation performance across the entire 25-year system lifecycle warranty.</p>
-        </div>
+<style>
+.page-hero{position:relative;padding:clamp(3rem, 6vw, 5rem) clamp(1rem, 4vw, 2rem) clamp(2rem, 5vw, 4rem);overflow:hidden;border-bottom:1px solid var(--clr-border);display:flex;align-items:center}
+.page-hero-bg{position:absolute;inset:0;z-index:0;pointer-events:none}
+.page-hero-blob{position:absolute;border-radius:50%;filter:blur(100px);pointer-events:none}
+.page-hero-blob-1{width:clamp(300px,50vw,600px);height:clamp(300px,50vw,600px);top:-20%;right:-10%;background:radial-gradient(circle,rgba(255,193,7,0.1) 0%,transparent 70%);animation:blob-drift 14s ease-in-out infinite alternate}
+.page-hero-blob-2{width:clamp(200px,35vw,400px);height:clamp(200px,35vw,400px);bottom:-10%;left:-5%;background:radial-gradient(circle,rgba(0,207,255,0.06) 0%,transparent 70%);animation:blob-drift 18s ease-in-out infinite alternate-reverse}
+@keyframes blob-drift{from{transform:translate(0,0) scale(1)}to{transform:translate(20px,-20px) scale(1.06)}}
+.page-hero-grid{position:absolute;inset:0;background-image:linear-gradient(to right,rgba(255,255,255,0.03) 1px,transparent 1px),linear-gradient(to bottom,rgba(255,255,255,0.03) 1px,transparent 1px);background-size:3.5rem 3.5rem}
+.page-hero-inner{max-width:var(--container);margin:0 auto;width:100%;position:relative;z-index:2;text-align:center}
+.page-hero-eyebrow{display:inline-flex;align-items:center;gap:0.5rem;font-family:var(--font-mono);font-size:0.62rem;font-weight:700;text-transform:uppercase;letter-spacing:0.15em;color:var(--clr-text-3);margin-bottom:var(--sp-3)}
+.page-hero-eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--clr-gold);animation:pulse-dot 2s ease infinite}
+@keyframes pulse-dot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.5;transform:scale(0.7)}}
+.page-hero-title{font-family:var(--font-display);font-size:var(--text-6xl);font-weight:900;letter-spacing:-0.03em;line-height:1.05;text-transform:uppercase;background:linear-gradient(160deg,#ffffff 20%,#94a3b8 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:var(--sp-3)}
+.page-hero-subtitle{font-size:var(--text-base);color:var(--clr-text-2);line-height:1.75;max-width:58ch;margin:0 auto var(--sp-5)}
+.page-hero-cta{display:flex;gap:0.75rem;justify-content:center;flex-wrap:wrap}
+.features-section{padding:var(--sp-12) clamp(1rem,4vw,2rem)}
+.features-inner{max-width:var(--container);margin:0 auto}
+.features-grid-2{display:grid;grid-template-columns:1fr;gap:var(--sp-4)}
+@media(min-width:640px){.features-grid-2{grid-template-columns:1fr 1fr}}
+.om-card{background:linear-gradient(135deg,rgba(7,11,23,0.97) 0%,rgba(15,23,42,0.94) 100%);border:1px solid var(--clr-border-md);border-radius:var(--radius-xl);padding:var(--sp-5) var(--sp-4);display:flex;gap:var(--sp-3);align-items:flex-start;transition:border-color var(--transition),box-shadow var(--transition),transform var(--transition)}
+.om-card:hover{border-color:rgba(255,193,7,0.25);box-shadow:0 12px 40px rgba(255,193,7,0.06);transform:translateY(-4px)}
+.om-card-letter{font-family:var(--font-mono);font-size:1.25rem;font-weight:900;color:rgba(255,193,7,0.3);flex-shrink:0;line-height:1;padding-top:0.125rem}
+.om-card-body h3{font-family:var(--font-display);font-size:var(--text-lg);font-weight:700;color:var(--clr-text-1);letter-spacing:-0.01em;line-height:1.3;margin-bottom:0.5rem}
+.om-card-body p{font-size:var(--text-xs);color:var(--clr-text-2);line-height:1.75}
+.cta-banner{max-width:var(--container);margin:0 auto var(--sp-12);border-radius:var(--radius-xl);background:linear-gradient(135deg,rgba(7,11,23,0.98),rgba(15,23,42,0.95));border:1px solid var(--clr-border-md);padding:clamp(var(--sp-5),6vw,var(--sp-10)) clamp(var(--sp-4),5vw,var(--sp-8));display:flex;flex-direction:column;align-items:center;text-align:center;gap:var(--sp-4);position:relative;overflow:hidden}
+.cta-banner::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:70%;height:1px;background:linear-gradient(90deg,transparent,rgba(255,193,7,0.5),transparent)}
+@media(min-width:768px){.cta-banner{flex-direction:row;text-align:left}}
+.cta-banner-text{flex:1}
+.cta-banner-text h3{font-family:var(--font-display);font-size:var(--text-3xl);font-weight:900;text-transform:uppercase;letter-spacing:-0.02em;color:var(--clr-text-1);margin-bottom:0.5rem}
+.cta-banner-text p{font-size:var(--text-sm);color:var(--clr-text-2);line-height:1.7;max-width:52ch}
+.cta-banner-actions{display:flex;gap:0.75rem;flex-wrap:wrap;flex-shrink:0;justify-content:center}
+@media(min-width:768px){.cta-banner-actions{justify-content:flex-end}}
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 pt-8">
-            <div class="p-6 bg-slate-900 rounded-xl border border-slate-800 flex gap-4">
-                <div class="text-amber-400 font-mono text-lg font-bold">A //</div>
-                <div class="space-y-2">
-                    <h4 class="font-bold text-white text-base">Thermal Imaging Drone Diagnostics</h4>
-                    <p class="text-slate-400 font-sans text-xs leading-relaxed">Automated aerial drone surveys track thermal signatures across the array, identifying and correcting micro-cracks and module defects before they impact production strings.</p>
+/* SLA table */
+.sla-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--sp-3);margin-top:var(--sp-6)}
+@media(min-width:640px){.sla-grid{grid-template-columns:repeat(4,1fr)}}
+.sla-box{background:linear-gradient(135deg,rgba(7,11,23,0.97),rgba(15,23,42,0.94));border:1px solid var(--clr-border-md);border-radius:var(--radius-lg);padding:var(--sp-3) var(--sp-2);text-align:center;transition:border-color var(--transition),transform var(--transition)}
+.sla-box:hover{border-color:rgba(255,193,7,0.2);transform:translateY(-2px)}
+.sla-val{font-family:var(--font-mono);font-size:clamp(1.3rem,3vw,1.75rem);font-weight:900;color:var(--clr-gold);display:block;line-height:1;margin-bottom:0.375rem}
+.sla-lbl{font-family:var(--font-mono);font-size:0.58rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--clr-text-3)}
+</style>
+
+<section class="page-hero" aria-label="Operation and Maintenance Services">
+    <div class="page-hero-bg">
+        <div class="page-hero-grid"></div>
+        <div class="page-hero-blob page-hero-blob-1"></div>
+        <div class="page-hero-blob page-hero-blob-2"></div>
+    </div>
+    <div class="page-hero-inner reveal">
+        <div class="page-hero-eyebrow"><span class="dot"></span> Asset Lifecycle Management</div>
+        <h1 class="page-hero-title">Preventative Asset<br>Operations &amp; O&amp;M</h1>
+        <p class="page-hero-subtitle">Solar arrays operate in demanding environments. Our ongoing O&amp;M management framework protects generation performance across the entire 25-year system lifecycle — with guaranteed uptime SLAs.</p>
+        <div class="page-hero-cta">
+            <a href="https://wa.me/916381127757?text=Hi%20SIP%20INFRA!%20I%20am%20interested%20in%20a%20solar%20quote." target="_blank" class="btn btn-gold">Get O&amp;M Contract Quote</a>
+            <a href="{% url 'home' %}#contact" class="btn btn-dark">Schedule Drone Audit</a>
+        </div>
+    </div>
+</section>
+
+<!-- SLA Stats -->
+<div style="padding:var(--sp-6) clamp(1rem,4vw,2rem);">
+    <div class="features-inner">
+        <div class="sla-grid">
+            <div class="sla-box stagger-item"><span class="sla-val">99.2%</span><span class="sla-lbl">Uptime SLA Guarantee</span></div>
+            <div class="sla-box stagger-item"><span class="sla-val">4h</span><span class="sla-lbl">Fault Response Time</span></div>
+            <div class="sla-box stagger-item"><span class="sla-val">2×/yr</span><span class="sla-lbl">Drone Thermal Audit</span></div>
+            <div class="sla-box stagger-item"><span class="sla-val">24/7</span><span class="sla-lbl">Remote Monitoring</span></div>
+        </div>
+    </div>
+</div>
+
+<section class="features-section" aria-labelledby="om-heading">
+    <div class="features-inner">
+        <div class="section-header reveal">
+            <div class="section-eyebrow"><span class="eyebrow-dot"></span> O&amp;M Services</div>
+            <h2 class="section-title" id="om-heading"><span class="gradient-text">Protecting Your Asset</span> Performance for 25 Years</h2>
+            <p class="section-subtitle">Every SIP INFRA O&amp;M contract guarantees performance through a combination of predictive technology, certified field technicians, and our industry-leading 4-hour fault response SLA.</p>
+        </div>
+        <div class="features-grid-2">
+            <div class="om-card stagger-item">
+                <div class="om-card-letter">A //</div>
+                <div class="om-card-body">
+                    <h3>Thermal Imaging Drone Diagnostics</h3>
+                    <p>Biannual automated aerial drone surveys track thermal signatures across the entire array, identifying micro-cracks, cell delamination, hot-spot failures, and bypass diode faults before they cascade into string-level production loss.</p>
                 </div>
             </div>
-            <div class="p-6 bg-slate-900 rounded-xl border border-slate-800 flex gap-4">
-                <div class="text-amber-400 font-mono text-lg font-bold">B //</div>
-                <div class="space-y-2">
-                    <h4 class="font-bold text-white text-base">Predictive Cloud Performance Tracking</h4>
-                    <p class="text-slate-400 font-sans text-xs leading-relaxed">System performance is continuously analyzed against local weather data. Machine learning systems trace and flag performance deviations down to individual inverter strings, coordinating technician response teams effectively.</p>
+            <div class="om-card stagger-item">
+                <div class="om-card-letter">B //</div>
+                <div class="om-card-body">
+                    <h3>Predictive Cloud Performance Tracking</h3>
+                    <p>System performance is continuously analyzed against local irradiance and weather data. Machine learning algorithms flag performance deviations down to individual inverter strings, coordinating certified technician response teams within 4 hours.</p>
+                </div>
+            </div>
+            <div class="om-card stagger-item">
+                <div class="om-card-letter">C //</div>
+                <div class="om-card-body">
+                    <h3>Panel Cleaning &amp; Vegetation Management</h3>
+                    <p>Quarterly scheduled module cleaning using demineralized water systems removes dust, bird fouling, and algae deposits. Studies show cleaning alone recovers 3–7% annual generation — fully managed by our field crews.</p>
+                </div>
+            </div>
+            <div class="om-card stagger-item">
+                <div class="om-card-letter">D //</div>
+                <div class="om-card-body">
+                    <h3>Electrical Safety &amp; Insurance Compliance</h3>
+                    <p>Annual certified electrical testing including insulation resistance, earth continuity, SPD functionality checks, and RCD trip-time verification — all documented for your insurance provider and CEIG compliance records.</p>
                 </div>
             </div>
         </div>
     </div>
 </section>
+
+<div class="cta-banner reveal" style="padding-left:clamp(1rem,4vw,2rem);padding-right:clamp(1rem,4vw,2rem);">
+    <div class="cta-banner-text">
+        <h3>Protect Your 25-Year ROI with Our O&amp;M Cover</h3>
+        <p>A well-maintained solar system generates 8–12% more energy over its lifetime. Our O&amp;M plans start from ₹1.5/Wp/year — less than 3% of annual savings recovered.</p>
+    </div>
+    <div class="cta-banner-actions">
+        <a href="https://wa.me/916381127757?text=Hi%20SIP%20INFRA!%20I%20am%20interested%20in%20a%20solar%20quote." target="_blank" class="btn btn-gold">Get O&amp;M Proposal →</a>
+        <a href="{% url 'engineering_epc' %}" class="btn btn-dark">View EPC Specs</a>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    if (typeof gsap === 'undefined') { document.querySelectorAll('.reveal,.stagger-item').forEach(el => { el.style.opacity=1; el.style.transform='none'; }); return; }
+    gsap.registerPlugin(ScrollTrigger);
+    gsap.utils.toArray('.reveal').forEach(el => { gsap.to(el, { opacity:1, y:0, duration:0.9, ease:'power3.out', scrollTrigger:{ trigger:el, start:'top 85%', once:true } }); });
+    gsap.utils.toArray('.stagger-item').forEach((el,i) => { gsap.to(el, { opacity:1, y:0, duration:0.7, delay:i*0.08, ease:'power3.out', scrollTrigger:{ trigger:el, start:'top 90%', once:true } }); });
+});
+</script>
 {% endblock %}

@@ -1,49 +1,133 @@
 {% extends 'solar_web/base.html' %}
 {% block content %}
-<section class="py-20 px-4 sm:px-6 bg-slate-950">
-    <div class="max-w-7xl mx-auto space-y-16">
-        <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 border-b border-slate-800 pb-8">
-            <div class="space-y-2">
-                <span class="text-amber-500 font-mono text-xs uppercase tracking-widest">// Procurement Engineering Controls</span>
-                <h1 class="text-4xl font-black text-white tracking-tight">EPC Execution Blueprint</h1>
-            </div>
-            <p class="text-slate-400 text-xs sm:text-sm max-w-md font-light">
-                Our Engineering, Procurement, and Construction framework combines advanced technology and robust site workflows to deliver systems optimized for maximum generation yield.
-            </p>
-        </div>
+<style>
+.page-hero{position:relative;padding:clamp(3rem, 6vw, 5rem) clamp(1rem, 4vw, 2rem) clamp(2rem, 5vw, 4rem);overflow:hidden;border-bottom:1px solid var(--clr-border);display:flex;align-items:center}
+.page-hero-bg{position:absolute;inset:0;z-index:0;pointer-events:none}
+.page-hero-blob{position:absolute;border-radius:50%;filter:blur(100px);pointer-events:none}
+.page-hero-blob-1{width:clamp(300px,50vw,600px);height:clamp(300px,50vw,600px);top:-20%;right:-10%;background:radial-gradient(circle,rgba(255,193,7,0.1) 0%,transparent 70%);animation:blob-drift 14s ease-in-out infinite alternate}
+.page-hero-blob-2{width:clamp(200px,35vw,400px);height:clamp(200px,35vw,400px);bottom:-10%;left:-5%;background:radial-gradient(circle,rgba(0,207,255,0.06) 0%,transparent 70%);animation:blob-drift 18s ease-in-out infinite alternate-reverse}
+@keyframes blob-drift{from{transform:translate(0,0) scale(1)}to{transform:translate(20px,-20px) scale(1.06)}}
+.page-hero-grid{position:absolute;inset:0;background-image:linear-gradient(to right,rgba(255,255,255,0.03) 1px,transparent 1px),linear-gradient(to bottom,rgba(255,255,255,0.03) 1px,transparent 1px);background-size:3.5rem 3.5rem}
+.page-hero-inner{max-width:var(--container);margin:0 auto;width:100%;position:relative;z-index:2;text-align:center}
+.page-hero-eyebrow{display:inline-flex;align-items:center;gap:0.5rem;font-family:var(--font-mono);font-size:0.62rem;font-weight:700;text-transform:uppercase;letter-spacing:0.15em;color:var(--clr-text-3);margin-bottom:var(--sp-3)}
+.page-hero-eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--clr-gold);animation:pulse-dot 2s ease infinite}
+@keyframes pulse-dot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.5;transform:scale(0.7)}}
+.page-hero-title{font-family:var(--font-display);font-size:var(--text-6xl);font-weight:900;letter-spacing:-0.03em;line-height:1.05;text-transform:uppercase;background:linear-gradient(160deg,#ffffff 20%,#94a3b8 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:var(--sp-3)}
+.page-hero-subtitle{font-size:var(--text-base);color:var(--clr-text-2);line-height:1.75;max-width:58ch;margin:0 auto var(--sp-5)}
+.page-hero-cta{display:flex;gap:0.75rem;justify-content:center;flex-wrap:wrap}
+.features-section{padding:var(--sp-12) clamp(1rem,4vw,2rem)}
+.features-inner{max-width:var(--container);margin:0 auto}
+.two-col{display:grid;grid-template-columns:1fr;gap:var(--sp-8);align-items:start}
+@media(min-width:768px){.two-col{grid-template-columns:1fr 1fr}}
+.feature-card{background:linear-gradient(135deg,rgba(7,11,23,0.97) 0%,rgba(15,23,42,0.94) 100%);border:1px solid var(--clr-border-md);border-radius:var(--radius-xl);padding:var(--sp-5) var(--sp-4);display:flex;flex-direction:column;gap:var(--sp-2);transition:border-color var(--transition),box-shadow var(--transition),transform var(--transition)}
+.feature-card:hover{border-color:rgba(255,193,7,0.25);box-shadow:0 12px 40px rgba(255,193,7,0.06);transform:translateY(-4px)}
+.feature-card h3{font-family:var(--font-display);font-size:var(--text-lg);font-weight:700;color:var(--clr-text-1);letter-spacing:-0.01em;line-height:1.3}
+.feature-card p{font-size:var(--text-xs);color:var(--clr-text-2);line-height:1.75;flex:1}
+.cta-banner{max-width:var(--container);margin:0 auto var(--sp-12);border-radius:var(--radius-xl);background:linear-gradient(135deg,rgba(7,11,23,0.98),rgba(15,23,42,0.95));border:1px solid var(--clr-border-md);padding:clamp(var(--sp-5),6vw,var(--sp-10)) clamp(var(--sp-4),5vw,var(--sp-8));display:flex;flex-direction:column;align-items:center;text-align:center;gap:var(--sp-4);position:relative;overflow:hidden}
+.cta-banner::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:70%;height:1px;background:linear-gradient(90deg,transparent,rgba(255,193,7,0.5),transparent)}
+@media(min-width:768px){.cta-banner{flex-direction:row;text-align:left}}
+.cta-banner-text{flex:1}
+.cta-banner-text h3{font-family:var(--font-display);font-size:var(--text-3xl);font-weight:900;text-transform:uppercase;letter-spacing:-0.02em;color:var(--clr-text-1);margin-bottom:0.5rem}
+.cta-banner-text p{font-size:var(--text-sm);color:var(--clr-text-2);line-height:1.7;max-width:52ch}
+.cta-banner-actions{display:flex;gap:0.75rem;flex-wrap:wrap;flex-shrink:0;justify-content:center}
+@media(min-width:768px){.cta-banner-actions{justify-content:flex-end}}
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-            <div class="space-y-6">
-                <h3 class="text-xl font-bold text-white font-mono">// Premium Tier-1 Materials Specification</h3>
-                <p class="text-slate-400 text-xs sm:text-sm leading-relaxed">
-                    We source exclusively from Tier-1 BloombergNEF-rated manufacturers. Systems combine high-yield N-Type TOPCon bifacial photovoltaic panel elements with high-efficiency smart tracking central conversion strings.
-                </p>
-                <ul class="space-y-2 text-xs font-mono text-slate-300">
-                    <li class="flex items-center gap-2">
-                        <span class="w-1.5 h-1.5 bg-amber-500 rounded-full"></span> 
-                        Module Yield Capacity Floor: 22.5% Efficiency Index Minimum
-                    </li>
-                    <li class="flex items-center gap-2">
-                        <span class="w-1.5 h-1.5 bg-amber-500 rounded-full"></span> 
-                        Galvanized Steel Structure Protection: $80\mu\text{m}$ Zinc Coating Depth
-                    </li>
-                    <li class="flex items-center gap-2">
-                        <span class="w-1.5 h-1.5 bg-amber-500 rounded-full"></span> 
-                        Inverter Core Efficiency: Smart MPPT Yield Adapters ($\ge 98.7\%$)
-                    </li>
-                </ul>
+/* Topology stack */
+.topology-card{background:linear-gradient(135deg,rgba(7,11,23,0.97),rgba(15,23,42,0.94));border:1px solid var(--clr-border-md);border-radius:var(--radius-xl);padding:var(--sp-5) var(--sp-4)}
+.topology-title{font-family:var(--font-mono);font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:var(--clr-gold);margin-bottom:var(--sp-3)}
+.topology-layers{display:flex;flex-direction:column;gap:0.5rem}
+.topology-layer{padding:var(--sp-2) var(--sp-3);background:rgba(0,0,0,0.4);border:1px solid var(--clr-border);border-radius:var(--radius-md);font-family:var(--font-mono);font-size:0.65rem;font-weight:700;color:var(--clr-text-2);display:flex;align-items:center;gap:0.625rem;transition:border-color var(--transition),color var(--transition)}
+.topology-layer:hover{border-color:rgba(255,193,7,0.3);color:var(--clr-text-1)}
+.topology-dot{width:6px;height:6px;border-radius:50%;background:var(--clr-gold);flex-shrink:0}
+
+/* Spec list */
+.spec-list{display:flex;flex-direction:column;gap:0.625rem;margin-top:var(--sp-2)}
+.spec-item{display:flex;align-items:flex-start;gap:0.625rem;font-size:var(--text-xs);color:var(--clr-text-2);line-height:1.6}
+.spec-item::before{content:'';display:inline-block;width:5px;height:5px;border-radius:50%;background:var(--clr-gold);flex-shrink:0;margin-top:0.4rem}
+</style>
+
+<section class="page-hero" aria-label="EPC Engineering Services">
+    <div class="page-hero-bg">
+        <div class="page-hero-grid"></div>
+        <div class="page-hero-blob page-hero-blob-1"></div>
+        <div class="page-hero-blob page-hero-blob-2"></div>
+    </div>
+    <div class="page-hero-inner reveal">
+        <div class="page-hero-eyebrow"><span class="dot"></span> Procurement Engineering Controls</div>
+        <h1 class="page-hero-title">EPC Execution<br>Blueprint</h1>
+        <p class="page-hero-subtitle">Our Engineering, Procurement, and Construction framework combines advanced technology and robust site workflows to deliver systems optimized for maximum generation yield and 25-year structural integrity.</p>
+        <div class="page-hero-cta">
+            <a href="https://wa.me/916381127757?text=Hi%20SIP%20INFRA!%20I%20am%20interested%20in%20a%20solar%20quote." target="_blank" class="btn btn-gold">Request EPC Proposal</a>
+            <a href="{% url 'industrial' %}" class="btn btn-dark">View MW Specifications</a>
+        </div>
+    </div>
+</section>
+
+<section class="features-section" aria-labelledby="epc-heading">
+    <div class="features-inner">
+        <div class="section-header reveal">
+            <div class="section-eyebrow"><span class="eyebrow-dot"></span> Technical Specifications</div>
+            <h2 class="section-title" id="epc-heading"><span class="gradient-text">Tier-1 Materials</span> &amp; System Architecture</h2>
+        </div>
+        <div class="two-col">
+            <!-- Left: Specs -->
+            <div class="reveal-left">
+                <div class="feature-card" style="margin-bottom:var(--sp-4);">
+                    <h3>Premium Tier-1 Materials Specification</h3>
+                    <p>We source exclusively from BloombergNEF Tier-1 rated manufacturers. Systems combine high-yield N-Type TOPCon bifacial modules with high-efficiency smart MPPT central inverters and galvanized hot-dip steel mounting structures.</p>
+                    <div class="spec-list">
+                        <div class="spec-item">Module Efficiency Floor: 22.5% Minimum Efficiency Index</div>
+                        <div class="spec-item">N-Type TOPCon Bifacial: LID/LETID Immune Technology</div>
+                        <div class="spec-item">Galvanized Steel: 80μm Hot-Dip Zinc Coating Minimum</div>
+                        <div class="spec-item">Inverter MPPT Efficiency: ≥ 98.7% at Rated Power</div>
+                        <div class="spec-item">DC/AC Cables: UV-Resistant XLPE Double Insulated</div>
+                        <div class="spec-item">Protection: Type-1 SPD + DC Arc Fault Interrupters</div>
+                        <div class="spec-item">Monitoring: String-Level SCADA with 15-min granularity</div>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <h3>Quality Assurance Protocol</h3>
+                    <p>Every SIP INFRA installation follows a 47-point commissioning checklist validated by our senior engineers before grid energization. All materials carry manufacturer warranty backed by our 5-year workmanship guarantee.</p>
+                </div>
             </div>
-            <div class="border border-slate-800 p-8 rounded-2xl bg-slate-900/40 relative overflow-hidden group">
-                <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#fff_1px,transparent_1px)] bg-[size:10px_10px]"></div>
-                <h4 class="text-xs uppercase font-mono font-bold text-amber-400 tracking-wider mb-4">// System Cross-Section Topology</h4>
-                <div class="space-y-3 font-mono text-[10px] text-slate-400">
-                    <div class="p-3 border border-slate-800 rounded bg-slate-950">PV ARRAY Layer // High-Yield Bifacial Matrix Grid</div>
-                    <div class="p-3 border border-slate-800 rounded bg-slate-950">DC CONVERTER Node // Multi-Channel Maximum Power Point Optimizers</div>
-                    <div class="p-3 border border-slate-800 rounded bg-slate-950">PROTECTION Core // Dynamic SPD Isolators & Rapid Arc Interrupters</div>
-                    <div class="p-3 border border-slate-800 rounded bg-slate-950">UTILITY Interface // Smart Bi-Directional Net-Meters</div>
+
+            <!-- Right: Topology -->
+            <div class="reveal-right">
+                <div class="topology-card">
+                    <div class="topology-title">// System Cross-Section Topology</div>
+                    <div class="topology-layers">
+                        <div class="topology-layer"><span class="topology-dot"></span> PV ARRAY Layer — High-Yield N-Type TOPCon Bifacial Matrix Grid</div>
+                        <div class="topology-layer"><span class="topology-dot"></span> DC STRING Layer — Multi-Channel MPPT Optimizers + Arc-Fault Detection</div>
+                        <div class="topology-layer"><span class="topology-dot"></span> INVERTER Core — Smart Grid-Tied Central / String Conversion Units</div>
+                        <div class="topology-layer"><span class="topology-dot"></span> PROTECTION Core — Dynamic SPD Isolators + Rapid Arc Interrupters</div>
+                        <div class="topology-layer"><span class="topology-dot"></span> METERING Layer — Bi-Directional Smart Net-Meter (TANGEDCO Approved)</div>
+                        <div class="topology-layer"><span class="topology-dot"></span> UTILITY Interface — HT/LT Grid Interconnection + Export Transformer</div>
+                        <div class="topology-layer"><span class="topology-dot"></span> SCADA Platform — Cloud Remote Monitoring + Fault Alerting System</div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
+
+<div class="cta-banner reveal" style="padding-left:clamp(1rem,4vw,2rem);padding-right:clamp(1rem,4vw,2rem);">
+    <div class="cta-banner-text">
+        <h3>Request a Detailed EPC Proposal</h3>
+        <p>Our engineers will prepare a full technical specification document, SLD diagram, yield simulation report, and ROI projection — all at zero cost to you.</p>
+    </div>
+    <div class="cta-banner-actions">
+        <a href="https://wa.me/916381127757?text=Hi%20SIP%20INFRA!%20I%20am%20interested%20in%20a%20solar%20quote." target="_blank" class="btn btn-gold">Get Technical Proposal →</a>
+        <a href="{% url 'projects_portfolio' %}" class="btn btn-dark">View Case Studies</a>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    if (typeof gsap === 'undefined') { document.querySelectorAll('.reveal,.reveal-left,.reveal-right,.stagger-item').forEach(el => { el.style.opacity=1; el.style.transform='none'; }); return; }
+    gsap.registerPlugin(ScrollTrigger);
+    gsap.utils.toArray('.reveal').forEach(el => { gsap.to(el, { opacity:1, y:0, duration:0.9, ease:'power3.out', scrollTrigger:{ trigger:el, start:'top 85%', once:true } }); });
+    gsap.utils.toArray('.reveal-left').forEach(el => { gsap.to(el, { opacity:1, x:0, duration:0.9, ease:'power3.out', scrollTrigger:{ trigger:el, start:'top 85%', once:true } }); });
+    gsap.utils.toArray('.reveal-right').forEach(el => { gsap.to(el, { opacity:1, x:0, duration:0.9, ease:'power3.out', scrollTrigger:{ trigger:el, start:'top 85%', once:true } }); });
+});
+</script>
 {% endblock %}

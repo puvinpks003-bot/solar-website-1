@@ -1,30 +1,551 @@
 {% extends 'solar_web/base.html' %}
 {% block content %}
-<section class="py-20 px-4 sm:px-6 bg-slate-950 relative">
-    <div class="max-w-7xl mx-auto space-y-16">
-        <div class="text-center max-w-2xl mx-auto space-y-4">
-            <span class="text-amber-500 font-mono text-xs font-bold uppercase tracking-widest">CFO Operational Ledger</span>
-            <h1 class="text-4xl sm:text-5xl font-black text-white">Commercial CAPEX & OPEX Assets</h1>
-            <p class="text-slate-400 text-xs sm:text-sm">Convert complex commercial real estate footprint overheads into high-yield clean generation hubs leveraging current corporate taxation pathways.</p>
+
+<style>
+/* ============================================================
+   SHARED SUB-PAGE STYLES
+============================================================ */
+.page-hero {
+    position: relative;
+    padding: clamp(3rem, 6vw, 5rem) clamp(1rem, 4vw, 2rem) clamp(2rem, 5vw, 4rem);
+    overflow: hidden;
+    border-bottom: 1px solid var(--clr-border);
+    display: flex;
+    align-items: center;
+}
+.page-hero-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+}
+.page-hero-blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(100px);
+    pointer-events: none;
+}
+.page-hero-blob-1 {
+    width: clamp(300px, 50vw, 600px);
+    height: clamp(300px, 50vw, 600px);
+    top: -20%;
+    right: -10%;
+    background: radial-gradient(circle, rgba(255,193,7,0.1) 0%, transparent 70%);
+    animation: blob-drift 14s ease-in-out infinite alternate;
+}
+.page-hero-blob-2 {
+    width: clamp(200px, 35vw, 400px);
+    height: clamp(200px, 35vw, 400px);
+    bottom: -10%;
+    left: -5%;
+    background: radial-gradient(circle, rgba(0,207,255,0.06) 0%, transparent 70%);
+    animation: blob-drift 18s ease-in-out infinite alternate-reverse;
+}
+@keyframes blob-drift {
+    from { transform: translate(0,0) scale(1); }
+    to   { transform: translate(20px,-20px) scale(1.06); }
+}
+.page-hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 3.5rem 3.5rem;
+}
+.page-hero-inner {
+    max-width: var(--container);
+    margin: 0 auto;
+    width: 100%;
+    position: relative;
+    z-index: 2;
+    text-align: center;
+}
+.page-hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--clr-text-3);
+    margin-bottom: var(--sp-3);
+}
+.page-hero-eyebrow .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--clr-gold);
+    animation: pulse-dot 2s ease infinite;
+}
+@keyframes pulse-dot {
+    0%,100% { opacity:1; transform:scale(1); }
+    50%      { opacity:0.5; transform:scale(0.7); }
+}
+.page-hero-title {
+    font-family: var(--font-display);
+    font-size: var(--text-6xl);
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    text-transform: uppercase;
+    background: linear-gradient(160deg, #ffffff 20%, #94a3b8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: var(--sp-3);
+}
+.page-hero-subtitle {
+    font-size: var(--text-base);
+    color: var(--clr-text-2);
+    line-height: 1.75;
+    max-width: 58ch;
+    margin: 0 auto var(--sp-5);
+}
+.page-hero-cta {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* ---- Features Grid ---- */
+.features-section {
+    padding: var(--sp-12) clamp(1rem, 4vw, 2rem);
+}
+.features-inner { max-width: var(--container); margin: 0 auto; }
+.features-grid-2 {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--sp-4);
+}
+@media (min-width: 640px) { .features-grid-2 { grid-template-columns: 1fr 1fr; } }
+.features-grid-3 {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--sp-4);
+}
+@media (min-width: 640px) { .features-grid-3 { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 1024px){ .features-grid-3 { grid-template-columns: 1fr 1fr 1fr; } }
+.features-grid-4 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--sp-3);
+}
+@media (min-width: 768px)  { .features-grid-4 { grid-template-columns: repeat(4, 1fr); } }
+
+.feature-card {
+    background: linear-gradient(135deg, rgba(7,11,23,0.97) 0%, rgba(15,23,42,0.94) 100%);
+    border: 1px solid var(--clr-border-md);
+    border-radius: var(--radius-xl);
+    padding: var(--sp-5) var(--sp-4);
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-2);
+    transition: border-color var(--transition), box-shadow var(--transition), transform var(--transition);
+    position: relative;
+    overflow: hidden;
+}
+.feature-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,193,7,0.2), transparent);
+    opacity: 0;
+    transition: opacity var(--transition);
+}
+.feature-card:hover {
+    border-color: rgba(255,193,7,0.25);
+    box-shadow: 0 12px 40px rgba(255,193,7,0.06);
+    transform: translateY(-4px);
+}
+.feature-card:hover::before { opacity: 1; }
+.feature-card-icon {
+    width: 44px; height: 44px;
+    border-radius: var(--radius-md);
+    background: rgba(255,193,7,0.08);
+    border: 1px solid rgba(255,193,7,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-bottom: 0.25rem;
+}
+.feature-card-icon svg { width: 22px; height: 22px; color: var(--clr-gold); stroke: currentColor; fill: none; }
+.feature-card-num {
+    font-family: var(--font-mono);
+    font-size: 1.4rem;
+    font-weight: 900;
+    color: rgba(255,193,7,0.18);
+    line-height: 1;
+    margin-bottom: 0.25rem;
+}
+.feature-card h3 {
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: 700;
+    color: var(--clr-text-1);
+    letter-spacing: -0.01em;
+    line-height: 1.3;
+}
+.feature-card p {
+    font-size: var(--text-xs);
+    color: var(--clr-text-2);
+    line-height: 1.75;
+    flex: 1;
+}
+.feature-card-bullet {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    font-weight: 700;
+    color: var(--clr-text-2);
+    line-height: 1.5;
+}
+.feature-card-bullet::before {
+    content: '';
+    display: inline-block;
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--clr-gold);
+    flex-shrink: 0;
+    margin-top: 0.35rem;
+}
+
+/* ---- CTA Banner ---- */
+.cta-banner {
+    margin: 0 clamp(1rem, 4vw, 2rem) var(--sp-12);
+    border-radius: var(--radius-xl);
+    background: linear-gradient(135deg, rgba(7,11,23,0.98), rgba(15,23,42,0.95));
+    border: 1px solid var(--clr-border-md);
+    padding: clamp(var(--sp-5), 6vw, var(--sp-10)) clamp(var(--sp-4), 5vw, var(--sp-8));
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: var(--sp-4);
+    max-width: var(--container);
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    overflow: hidden;
+}
+.cta-banner::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 50%; transform: translateX(-50%);
+    width: 70%; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,193,7,0.5), transparent);
+}
+@media (min-width: 768px) {
+    .cta-banner { flex-direction: row; text-align: left; }
+}
+.cta-banner-text { flex: 1; }
+.cta-banner-text h3 {
+    font-family: var(--font-display);
+    font-size: var(--text-3xl);
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    color: var(--clr-text-1);
+    margin-bottom: 0.5rem;
+}
+.cta-banner-text p {
+    font-size: var(--text-sm);
+    color: var(--clr-text-2);
+    line-height: 1.7;
+    max-width: 52ch;
+}
+.cta-banner-actions {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    flex-shrink: 0;
+    justify-content: center;
+}
+@media (min-width: 768px) { .cta-banner-actions { justify-content: flex-end; } }
+
+/* ---- Stats row ---- */
+.stats-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--sp-3);
+    padding: var(--sp-6) clamp(1rem, 4vw, 2rem);
+    max-width: var(--container);
+    margin: 0 auto;
+}
+@media (min-width: 640px) { .stats-row { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 1024px){ .stats-row { grid-template-columns: repeat(6, 1fr); } }
+.stat-box {
+    background: linear-gradient(135deg, rgba(7,11,23,0.97), rgba(15,23,42,0.94));
+    border: 1px solid var(--clr-border-md);
+    border-radius: var(--radius-lg);
+    padding: var(--sp-3) var(--sp-2);
+    text-align: center;
+    transition: border-color var(--transition), transform var(--transition);
+}
+.stat-box:hover {
+    border-color: rgba(255,193,7,0.2);
+    transform: translateY(-2px);
+}
+.stat-box .val {
+    font-family: var(--font-mono);
+    font-size: clamp(1.25rem, 3vw, 1.6rem);
+    font-weight: 900;
+    color: var(--clr-text-1);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    display: block;
+    margin-bottom: 0.3rem;
+}
+.stat-box .val .unit { color: var(--clr-gold); }
+.stat-box .lbl {
+    font-family: var(--font-mono);
+    font-size: 0.58rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--clr-text-3);
+}
+
+/* ---- Process steps ---- */
+.process-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    position: relative;
+}
+.process-steps::before {
+    content: '';
+    position: absolute;
+    left: 1.5rem;
+    top: 2.5rem;
+    bottom: 2.5rem;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--clr-gold), transparent);
+}
+@media (min-width: 768px) {
+    .process-steps { flex-direction: row; gap: 0; }
+    .process-steps::before { display: none; }
+}
+.process-step {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--sp-3);
+    padding: var(--sp-3) var(--sp-3) var(--sp-3) var(--sp-2);
+    background: linear-gradient(135deg, rgba(7,11,23,0.97), rgba(15,23,42,0.94));
+    border: 1px solid var(--clr-border-md);
+    border-radius: var(--radius-lg);
+    flex: 1;
+    transition: border-color var(--transition), box-shadow var(--transition);
+}
+.process-step:hover {
+    border-color: rgba(255,193,7,0.25);
+    box-shadow: 0 8px 30px rgba(255,193,7,0.06);
+}
+.process-step-num {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    font-weight: 900;
+    color: var(--clr-text-3);
+    background: rgba(255,193,7,0.08);
+    border: 1px solid rgba(255,193,7,0.15);
+    border-radius: var(--radius-sm);
+    width: 36px; height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+.process-step-body h4 {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    font-weight: 700;
+    color: var(--clr-text-1);
+    margin-bottom: 0.375rem;
+    line-height: 1.3;
+}
+.process-step-body p {
+    font-size: var(--text-xs);
+    color: var(--clr-text-2);
+    line-height: 1.65;
+}
+
+/* ---- EPC Topology ---- */
+.topology-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+.topology-layer {
+    padding: var(--sp-2) var(--sp-3);
+    background: rgba(0,0,0,0.4);
+    border: 1px solid var(--clr-border);
+    border-radius: var(--radius-md);
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: var(--clr-text-2);
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    transition: border-color var(--transition), color var(--transition);
+}
+.topology-layer:hover {
+    border-color: rgba(255,193,7,0.3);
+    color: var(--clr-text-1);
+}
+.topology-layer .layer-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--clr-gold);
+    flex-shrink: 0;
+}
+</style>
+
+<!-- ============================================================
+     PAGE HERO
+============================================================ -->
+<section class="page-hero" aria-label="Commercial Solar Solutions">
+    <div class="page-hero-bg">
+        <div class="page-hero-grid"></div>
+        <div class="page-hero-blob page-hero-blob-1"></div>
+        <div class="page-hero-blob page-hero-blob-2"></div>
+    </div>
+    <div class="page-hero-inner reveal">
+        <div class="page-hero-eyebrow"><span class="dot"></span> CFO Operational Ledger</div>
+        <h1 class="page-hero-title">Commercial CAPEX<br>&amp; OPEX Solar Assets</h1>
+        <p class="page-hero-subtitle">Convert commercial real estate overhead into high-yield clean generation hubs leveraging current corporate taxation pathways and zero-investment PPA frameworks.</p>
+        <div class="page-hero-cta">
+            <a href="https://wa.me/916381127757?text=Hi%20SIP%20INFRA!%20I%20am%20interested%20in%20a%20solar%20quote." target="_blank" class="btn btn-gold">Get a Free Quote</a>
+            <a href="{% url 'home' %}#solar_calculator" class="btn btn-dark">Run ROI Calculator</a>
         </div>
+    </div>
+</section>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div class="bg-slate-900 p-8 rounded-2xl border border-slate-800 space-y-4">
-                <div class="w-12 h-12 bg-amber-500/10 rounded-xl flex items-center justify-center text-amber-400 border border-amber-500/20">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+<!-- ============================================================
+     STATS
+============================================================ -->
+<div class="stats-row">
+    <div class="stat-box stagger-item">
+        <span class="val">40<span class="unit">%</span></span>
+        <span class="lbl">Tax Depreciation</span>
+    </div>
+    <div class="stat-box stagger-item">
+        <span class="val">25<span class="unit"> Yr</span></span>
+        <span class="lbl">Performance Bond</span>
+    </div>
+    <div class="stat-box stagger-item">
+        <span class="val">₹0</span>
+        <span class="lbl">OPEX Upfront</span>
+    </div>
+    <div class="stat-box stagger-item">
+        <span class="val">4<span class="unit">–6</span></span>
+        <span class="lbl">Year Payback</span>
+    </div>
+    <div class="stat-box stagger-item">
+        <span class="val">100<span class="unit">%</span></span>
+        <span class="lbl">Subsidy Handled</span>
+    </div>
+    <div class="stat-box stagger-item">
+        <span class="val">3<span class="unit">+</span></span>
+        <span class="lbl">Finance Models</span>
+    </div>
+</div>
+
+<!-- ============================================================
+     FEATURES
+============================================================ -->
+<section class="features-section" aria-labelledby="commercial-features-heading">
+    <div class="features-inner">
+        <div class="section-header reveal">
+            <div class="section-eyebrow"><span class="eyebrow-dot"></span> Investment Structures</div>
+            <h2 class="section-title" id="commercial-features-heading"><span class="gradient-text">Commercial Solar</span> Financing Models</h2>
+            <p class="section-subtitle">Three proven financial structures for every corporate balance sheet — from full CAPEX ownership to zero-investment OPEX arrangements.</p>
+        </div>
+        <div class="features-grid-3">
+            <div class="feature-card stagger-item">
+                <div class="feature-card-icon">
+                    <svg stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
                 </div>
-                <h3 class="text-xl font-bold text-white">Accelerated 40% Tax Depreciation</h3>
-                <p class="text-slate-400 text-xs sm:text-sm leading-relaxed">Commercial entities can write off up to 40% of solar asset investments within year one, lowering overall capital costs and accelerating break-even horizons.</p>
+                <h3>Accelerated 40% Tax Depreciation</h3>
+                <p>Commercial entities write off up to 40% of solar asset investment in year one under Section 32 of the Income Tax Act, significantly lowering capital costs and accelerating break-even horizons to under 5 years.</p>
             </div>
-
-            <div class="bg-slate-900 p-8 rounded-2xl border border-slate-800 space-y-4">
-                <div class="w-12 h-12 bg-amber-500/10 rounded-xl flex items-center justify-center text-amber-400 border border-amber-500/20">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            <div class="feature-card stagger-item">
+                <div class="feature-card-icon">
+                    <svg stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                 </div>
-                <h3 class="text-xl font-bold text-white">OPEX / PPA Zero-Investment Solutions</h3>
-                <p class="text-slate-400 text-xs sm:text-sm leading-relaxed">Procure clean energy with zero upfront cost. Pay purely for generated solar units via structured Power Purchase Agreements below utility tariff rates.</p>
+                <h3>OPEX / PPA Zero-Investment Solutions</h3>
+                <p>Procure clean energy with zero upfront capital. Pay only for generated solar units via structured Power Purchase Agreements at rates 20–35% below prevailing TANGEDCO utility tariff levels.</p>
+            </div>
+            <div class="feature-card stagger-item">
+                <div class="feature-card-icon">
+                    <svg stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"/></svg>
+                </div>
+                <h3>Debt-Financed Term Loan Infrastructure</h3>
+                <p>Leverage priority-sector solar lending at preferential interest rates (8–10% p.a.) with tenure up to 15 years. EMI is structurally lower than monthly electricity savings from day one of commissioning.</p>
+            </div>
+            <div class="feature-card stagger-item">
+                <div class="feature-card-icon">
+                    <svg stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                </div>
+                <h3>Net-Metering Grid Export</h3>
+                <p>Excess generation exported back to the TANGEDCO grid accumulates unit credits which offset night-time consumption charges. Maximum system utilization, zero generation waste.</p>
+            </div>
+            <div class="feature-card stagger-item">
+                <div class="feature-card-icon">
+                    <svg stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+                </div>
+                <h3>Complete CEIG &amp; TANGEDCO Compliance</h3>
+                <p>SIP INFRA manages the complete regulatory pipeline — CEIG inspections, TANGEDCO interconnection agreements, net-meter installations, and government subsidy DBT disbursements.</p>
+            </div>
+            <div class="feature-card stagger-item">
+                <div class="feature-card-icon">
+                    <svg stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+                </div>
+                <h3>Real-Time Performance Dashboard</h3>
+                <p>24/7 cloud-based monitoring of every inverter string, panel cluster, and grid injection point. Monthly detailed generation and financial savings reports delivered to your management team.</p>
             </div>
         </div>
     </div>
 </section>
+
+<!-- ============================================================
+     CTA BANNER
+============================================================ -->
+<div class="cta-banner reveal" style="margin-bottom:var(--sp-12);">
+    <div class="cta-banner-text">
+        <h3>Ready to Cut Your Electricity Bill by 80%?</h3>
+        <p>Our commercial solar specialists will analyse your TANGEDCO bills, site area, and financial preferences to design a project-specific ROI model — at no cost.</p>
+    </div>
+    <div class="cta-banner-actions">
+        <a href="https://wa.me/916381127757?text=Hi%20SIP%20INFRA!%20I%20am%20interested%20in%20a%20solar%20quote." target="_blank" class="btn btn-gold">Start Free Assessment →</a>
+        <a href="{% url 'projects_portfolio' %}" class="btn btn-dark">View Case Studies</a>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    if (typeof gsap === 'undefined') {
+        document.querySelectorAll('.reveal,.stagger-item').forEach(el => {
+            el.style.opacity = 1;
+            el.style.transform = 'none';
+        });
+        return;
+    }
+    gsap.registerPlugin(ScrollTrigger);
+    gsap.utils.toArray('.reveal').forEach(el => {
+        gsap.to(el, { opacity:1, y:0, duration:0.9, ease:'power3.out',
+            scrollTrigger:{ trigger:el, start:'top 85%', once:true } });
+    });
+    gsap.utils.toArray('.stagger-item').forEach((el,i) => {
+        gsap.to(el, { opacity:1, y:0, duration:0.7, delay:i*0.08, ease:'power3.out',
+            scrollTrigger:{ trigger:el, start:'top 90%', once:true } });
+    });
+});
+</script>
 {% endblock %}

@@ -1,43 +1,142 @@
 {% extends 'solar_web/base.html' %}
 {% block content %}
-<section class="relative py-20 px-4 sm:px-6 bg-slate-950 overflow-hidden">
-    <div class="absolute inset-0 bg-[linear-gradient(to_right,#0f172a_1px,transparent_1px),linear-gradient(to_bottom,#0f172a_1px,transparent_1px)] bg-[size:4rem_4rem]"></div>
-    <div class="absolute top-1/4 right-0 w-96 h-96 bg-amber-500/5 rounded-full blur-3xl animate-pulse"></div>
 
-    <div class="max-w-7xl mx-auto relative z-10 space-y-16">
-        <div class="text-center max-w-3xl mx-auto space-y-4">
-            <span class="text-amber-400 font-mono text-xs font-bold tracking-widest uppercase bg-amber-500/10 px-3 py-1 rounded-full border border-amber-500/20">// High-Tension Transmission Control</span>
-            <h1 class="text-4xl sm:text-6xl font-black text-white tracking-tight">Industrial Megawatt Solar Architecture</h1>
-            <p class="text-slate-400 text-sm sm:text-base leading-relaxed">Turnkey engineering architectures optimized explicitly for complex heavy machinery loads, high-voltage processing units, and high structural resilience.</p>
-        </div>
+{% load static %}
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div class="bg-slate-900/60 p-8 rounded-2xl border border-slate-800 hover:border-amber-500/30 transition-all">
-                <div class="text-amber-400 font-mono text-2xl font-bold mb-4">01 // Zero Penetration</div>
-                <h3 class="text-lg font-bold text-white mb-2">Non-Penetrating Structural Matrix</h3>
-                <p class="text-slate-400 text-xs leading-relaxed">Advanced structural mount designs preventing damage to standing seam and industrial roof sheets, eliminating leaks while remaining structurally secure during intense monsoons.</p>
-            </div>
-            <div class="bg-slate-900/60 p-8 rounded-2xl border border-slate-800 hover:border-amber-500/30 transition-all">
-                <div class="text-amber-400 font-mono text-2xl font-bold mb-4">02 // Structural Modeling</div>
-                <h3 class="text-lg font-bold text-white mb-2">Wind Velocity Rating ($180\text{ km/h}$)</h3>
-                <p class="text-slate-400 text-xs leading-relaxed">Engineered structural steel supports calculated via specialized finite element analysis software to withstand severe wind forces in coastal regions across Southern India.</p>
-            </div>
-            <div class="bg-slate-900/60 p-8 rounded-2xl border border-slate-800 hover:border-amber-500/30 transition-all">
-                <div class="text-amber-400 font-mono text-2xl font-bold mb-4">03 // Phase Matching</div>
-                <h3 class="text-lg font-bold text-white mb-2">Harmonic Control Array</h3>
-                <p class="text-slate-400 text-xs leading-relaxed">Active filtering techniques maintain low total harmonic distortion levels, matching grid requirements and avoiding reactive utility financial penalties.</p>
-            </div>
-        </div>
+<style>
+/* Shared sub-page styles — same as commercial */
+.page-hero { position:relative; padding:clamp(3rem, 6vw, 5rem) clamp(1rem, 4vw, 2rem) clamp(2rem, 5vw, 4rem); overflow:hidden; border-bottom:1px solid var(--clr-border); display:flex; align-items:center; }
+.page-hero-bg { position:absolute; inset:0; z-index:0; pointer-events:none; }
+.page-hero-blob { position:absolute; border-radius:50%; filter:blur(100px); pointer-events:none; }
+.page-hero-blob-1 { width:clamp(300px,50vw,600px); height:clamp(300px,50vw,600px); top:-20%; right:-10%; background:radial-gradient(circle,rgba(255,193,7,0.12) 0%,transparent 70%); animation:blob-drift 14s ease-in-out infinite alternate; }
+.page-hero-blob-2 { width:clamp(200px,35vw,400px); height:clamp(200px,35vw,400px); bottom:-10%; left:-5%; background:radial-gradient(circle,rgba(0,207,255,0.07) 0%,transparent 70%); animation:blob-drift 18s ease-in-out infinite alternate-reverse; }
+@keyframes blob-drift { from{transform:translate(0,0) scale(1)} to{transform:translate(20px,-20px) scale(1.06)} }
+.page-hero-grid { position:absolute; inset:0; background-image:linear-gradient(to right,rgba(255,255,255,0.03) 1px,transparent 1px),linear-gradient(to bottom,rgba(255,255,255,0.03) 1px,transparent 1px); background-size:3.5rem 3.5rem; }
+.page-hero-inner { max-width:var(--container); margin:0 auto; width:100%; position:relative; z-index:2; text-align:center; }
+.page-hero-eyebrow { display:inline-flex; align-items:center; gap:0.5rem; font-family:var(--font-mono); font-size:0.62rem; font-weight:700; text-transform:uppercase; letter-spacing:0.15em; color:var(--clr-text-3); margin-bottom:var(--sp-3); }
+.page-hero-eyebrow .dot { width:6px; height:6px; border-radius:50%; background:var(--clr-gold); animation:pulse-dot 2s ease infinite; }
+@keyframes pulse-dot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.7)} }
+.page-hero-title { font-family:var(--font-display); font-size:var(--text-6xl); font-weight:900; letter-spacing:-0.03em; line-height:1.05; text-transform:uppercase; background:linear-gradient(160deg,#ffffff 20%,#94a3b8 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; margin-bottom:var(--sp-3); }
+.page-hero-subtitle { font-size:var(--text-base); color:var(--clr-text-2); line-height:1.75; max-width:58ch; margin:0 auto var(--sp-5); }
+.page-hero-cta { display:flex; gap:0.75rem; justify-content:center; flex-wrap:wrap; }
+.features-section { padding:var(--sp-12) clamp(1rem,4vw,2rem); }
+.features-inner { max-width:var(--container); margin:0 auto; }
+.features-grid-3 { display:grid; grid-template-columns:1fr; gap:var(--sp-4); }
+@media (min-width:640px) { .features-grid-3 { grid-template-columns:1fr 1fr; } }
+@media (min-width:1024px) { .features-grid-3 { grid-template-columns:1fr 1fr 1fr; } }
+.feature-card { background:linear-gradient(135deg,rgba(7,11,23,0.97) 0%,rgba(15,23,42,0.94) 100%); border:1px solid var(--clr-border-md); border-radius:var(--radius-xl); padding:var(--sp-5) var(--sp-4); display:flex; flex-direction:column; gap:var(--sp-2); transition:border-color var(--transition),box-shadow var(--transition),transform var(--transition); position:relative; overflow:hidden; }
+.feature-card:hover { border-color:rgba(255,193,7,0.25); box-shadow:0 12px 40px rgba(255,193,7,0.06); transform:translateY(-4px); }
+.feature-card-icon { width:44px; height:44px; border-radius:var(--radius-md); background:rgba(255,193,7,0.08); border:1px solid rgba(255,193,7,0.15); display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-bottom:0.25rem; }
+.feature-card-icon svg { width:22px; height:22px; color:var(--clr-gold); stroke:currentColor; fill:none; }
+.feature-card-num { font-family:var(--font-mono); font-size:1.4rem; font-weight:900; color:rgba(255,193,7,0.18); line-height:1; margin-bottom:0.25rem; }
+.feature-card h3 { font-family:var(--font-display); font-size:var(--text-lg); font-weight:700; color:var(--clr-text-1); letter-spacing:-0.01em; line-height:1.3; }
+.feature-card p { font-size:var(--text-xs); color:var(--clr-text-2); line-height:1.75; flex:1; }
+.cta-banner { max-width:var(--container); margin:0 auto var(--sp-12); border-radius:var(--radius-xl); background:linear-gradient(135deg,rgba(7,11,23,0.98),rgba(15,23,42,0.95)); border:1px solid var(--clr-border-md); padding:clamp(var(--sp-5),6vw,var(--sp-10)) clamp(var(--sp-4),5vw,var(--sp-8)); display:flex; flex-direction:column; align-items:center; text-align:center; gap:var(--sp-4); position:relative; overflow:hidden; }
+.cta-banner::before { content:''; position:absolute; top:0; left:50%; transform:translateX(-50%); width:70%; height:1px; background:linear-gradient(90deg,transparent,rgba(255,193,7,0.5),transparent); }
+@media (min-width:768px) { .cta-banner{flex-direction:row;text-align:left;} }
+.cta-banner-text h3 { font-family:var(--font-display); font-size:var(--text-3xl); font-weight:900; text-transform:uppercase; letter-spacing:-0.02em; color:var(--clr-text-1); margin-bottom:0.5rem; }
+.cta-banner-text p { font-size:var(--text-sm); color:var(--clr-text-2); line-height:1.7; max-width:52ch; }
+.cta-banner-text { flex:1; }
+.cta-banner-actions { display:flex; gap:0.75rem; flex-wrap:wrap; flex-shrink:0; justify-content:center; }
+@media (min-width:768px) { .cta-banner-actions{justify-content:flex-end;} }
+.stats-row { display:grid; grid-template-columns:repeat(2,1fr); gap:var(--sp-3); padding:var(--sp-6) clamp(1rem,4vw,2rem); max-width:var(--container); margin:0 auto; }
+@media (min-width:640px) { .stats-row{grid-template-columns:repeat(3,1fr);} }
+@media (min-width:1024px) { .stats-row{grid-template-columns:repeat(6,1fr);} }
+.stat-box { background:linear-gradient(135deg,rgba(7,11,23,0.97),rgba(15,23,42,0.94)); border:1px solid var(--clr-border-md); border-radius:var(--radius-lg); padding:var(--sp-3) var(--sp-2); text-align:center; transition:border-color var(--transition),transform var(--transition); }
+.stat-box:hover { border-color:rgba(255,193,7,0.2); transform:translateY(-2px); }
+.stat-box .val { font-family:var(--font-mono); font-size:clamp(1.25rem,3vw,1.6rem); font-weight:900; color:var(--clr-text-1); line-height:1; letter-spacing:-0.02em; display:block; margin-bottom:0.3rem; }
+.stat-box .val .unit { color:var(--clr-gold); }
+.stat-box .lbl { font-family:var(--font-mono); font-size:0.58rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:var(--clr-text-3); }
+</style>
 
-        <div class="bg-gradient-to-r from-slate-900 to-slate-950 p-8 md:p-12 rounded-3xl border border-slate-800 flex flex-col md:flex-row items-center justify-between gap-8">
-            <div class="space-y-4 max-w-2xl">
-                <h3 class="text-2xl font-black text-white">Ready for a Geotechnical Site Analysis?</h3>
-                <p class="text-slate-400 text-xs sm:text-sm">Our in-house engineering team conducts detailed soil analysis, structural weight evaluations, and solar shade mapping to build your custom generation profile.</p>
-            </div>
-            <a href="{% url 'contact_desk' %}" class="px-6 py-4 bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs uppercase tracking-widest rounded-xl transition-all shadow-lg shrink-0">
-                Initiate Engineering Site Survey &rarr;
-            </a>
+<section class="page-hero" aria-label="Industrial Megawatt Solar Solutions">
+    <div class="page-hero-bg">
+        <div class="page-hero-grid"></div>
+        <div class="page-hero-blob page-hero-blob-1"></div>
+        <div class="page-hero-blob page-hero-blob-2"></div>
+    </div>
+    <div class="page-hero-inner reveal">
+        <div class="page-hero-eyebrow"><span class="dot"></span> High-Tension Transmission Control</div>
+        <h1 class="page-hero-title">Industrial Megawatt<br>Solar Architecture</h1>
+        <p class="page-hero-subtitle">Turnkey engineering architectures optimized explicitly for complex heavy machinery loads, high-voltage processing units, and high structural resilience across Tamil Nadu's industrial corridors.</p>
+        <div class="page-hero-cta">
+            <a href="https://wa.me/916381127757?text=Hi%20SIP%20INFRA!%20I%20am%20interested%20in%20a%20solar%20quote." target="_blank" class="btn btn-gold">Request Site Survey</a>
+            <a href="{% url 'projects_portfolio' %}" class="btn btn-dark">View MW Projects</a>
         </div>
     </div>
 </section>
+
+<div class="stats-row">
+    <div class="stat-box stagger-item"><span class="val">1<span class="unit">MW+</span></span><span class="lbl">Min Project Size</span></div>
+    <div class="stat-box stagger-item"><span class="val">180<span class="unit">km/h</span></span><span class="lbl">Wind Rating</span></div>
+    <div class="stat-box stagger-item"><span class="val">22.5<span class="unit">%</span></span><span class="lbl">Min Module Efficiency</span></div>
+    <div class="stat-box stagger-item"><span class="val">98.7<span class="unit">%</span></span><span class="lbl">Inverter Efficiency</span></div>
+    <div class="stat-box stagger-item"><span class="val">25<span class="unit"> Yr</span></span><span class="lbl">Structural Warranty</span></div>
+    <div class="stat-box stagger-item"><span class="val">0<span class="unit">%</span></span><span class="lbl">Roof Penetration</span></div>
+</div>
+
+<section class="features-section" aria-labelledby="industrial-features-heading">
+    <div class="features-inner">
+        <div class="section-header reveal">
+            <div class="section-eyebrow"><span class="eyebrow-dot"></span> Engineering Excellence</div>
+            <h2 class="section-title" id="industrial-features-heading"><span class="gradient-text">Built for Heavy</span> Industry Loads</h2>
+            <p class="section-subtitle">Every industrial solar system engineered by SIP INFRA is purpose-built to operate seamlessly alongside heavy machinery, high-harmonic loads, and monsoon-grade structural requirements.</p>
+        </div>
+        <div class="features-grid-3">
+            <div class="feature-card stagger-item">
+                <div class="feature-card-num">01</div>
+                <h3>Non-Penetrating Structural Matrix</h3>
+                <p>Advanced structural mount designs prevent damage to standing seam and industrial roof sheets, eliminating water ingress while remaining structurally secure during intense monsoon-season wind events rated at 180 km/h.</p>
+            </div>
+            <div class="feature-card stagger-item">
+                <div class="feature-card-num">02</div>
+                <h3>Wind Velocity Rating: 180 km/h</h3>
+                <p>Engineered structural steel supports calculated via specialized finite element analysis (FEA) software to withstand severe wind forces in coastal regions across Southern India. Each structure CEIG-certified and insured.</p>
+            </div>
+            <div class="feature-card stagger-item">
+                <div class="feature-card-num">03</div>
+                <h3>Harmonic Control Array</h3>
+                <p>Active filtering techniques maintain THD levels below 5%, matching grid requirements and avoiding reactive power financial penalties from TANGEDCO. Fully compatible with VFD-driven heavy machinery.</p>
+            </div>
+            <div class="feature-card stagger-item">
+                <div class="feature-card-num">04</div>
+                <h3>N-Type TOPCon Bifacial Modules</h3>
+                <p>Bloomberg NEF Tier-1 rated bifacial N-Type TOPCon modules with 22.5%+ efficiency floor, capturing both direct irradiance and reflected ground albedo to maximize generation yield across all hours of operation.</p>
+            </div>
+            <div class="feature-card stagger-item">
+                <div class="feature-card-num">05</div>
+                <h3>Smart SCADA Monitoring Integration</h3>
+                <p>Industrial-grade SCADA systems provide string-level performance visibility, automatic fault isolation, and live generation dashboards integrated directly with plant ERP and energy management systems.</p>
+            </div>
+            <div class="feature-card stagger-item">
+                <div class="feature-card-num">06</div>
+                <h3>HT/LT Grid Interconnection Design</h3>
+                <p>Full high-tension interconnection engineering including transformer sizing, protection relay coordination, arc-flash calculations, and TANGEDCO evacuation infrastructure for seamless grid export.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="cta-banner reveal" style="padding-left:clamp(1rem,4vw,2rem);padding-right:clamp(1rem,4vw,2rem);">
+    <div class="cta-banner-text">
+        <h3>Ready for a Geotechnical Site Analysis?</h3>
+        <p>Our in-house engineering team conducts detailed soil analysis, structural weight evaluations, and solar shade mapping to build your custom generation profile at zero cost.</p>
+    </div>
+    <div class="cta-banner-actions">
+        <a href="https://wa.me/916381127757?text=Hi%20SIP%20INFRA!%20I%20am%20interested%20in%20a%20solar%20quote." target="_blank" class="btn btn-gold">Initiate Engineering Survey →</a>
+        <a href="{% url 'engineering_epc' %}" class="btn btn-dark">View EPC Specifications</a>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    if (typeof gsap === 'undefined') {
+        document.querySelectorAll('.reveal,.stagger-item').forEach(el => { el.style.opacity=1; el.style.transform='none'; });
+        return;
+    }
+    gsap.registerPlugin(ScrollTrigger);
+    gsap.utils.toArray('.reveal').forEach(el => { gsap.to(el, { opacity:1, y:0, duration:0.9, ease:'power3.out', scrollTrigger:{ trigger:el, start:'top 85%', once:true } }); });
+    gsap.utils.toArray('.stagger-item').forEach((el,i) => { gsap.to(el, { opacity:1, y:0, duration:0.7, delay:i*0.08, ease:'power3.out', scrollTrigger:{ trigger:el, start:'top 90%', once:true } }); });
+});
+</script>
 {% endblock %}

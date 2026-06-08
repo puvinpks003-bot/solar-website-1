@@ -1,42 +1,149 @@
 {% extends 'solar_web/base.html' %}
 {% block content %}
-<section class="py-20 px-4 sm:px-6 bg-slate-950 text-slate-100 font-sans">
-    <div class="max-w-5xl mx-auto space-y-12">
-        <div class="space-y-4 text-center">
-            <div class="inline-block px-3 py-1 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 rounded-md font-mono text-xs uppercase tracking-wider">
-                Regulatory Operations // 2026 Policy Desk
-            </div>
-            <h1 class="text-3xl sm:text-5xl font-black tracking-tight text-white">Government Subsidy & Grid Integration Portal</h1>
-            <p class="text-slate-400 text-sm max-w-2xl mx-auto">
-                Navigating regulatory landscapes is a core challenge for clean energy projects. SIP INFRA handles the entire regulatory pipeline, including TANGEDCO application management, load approvals, and Central Subsidy DBT verification.
-            </p>
-        </div>
+<style>
+.page-hero{position:relative;padding:clamp(3rem, 6vw, 5rem) clamp(1rem, 4vw, 2rem) clamp(2rem, 5vw, 4rem);overflow:hidden;border-bottom:1px solid var(--clr-border);display:flex;align-items:center}
+.page-hero-bg{position:absolute;inset:0;z-index:0;pointer-events:none}
+.page-hero-blob{position:absolute;border-radius:50%;filter:blur(100px);pointer-events:none}
+.page-hero-blob-1{width:clamp(300px,50vw,600px);height:clamp(300px,50vw,600px);top:-20%;right:-10%;background:radial-gradient(circle,rgba(255,193,7,0.1) 0%,transparent 70%);animation:blob-drift 14s ease-in-out infinite alternate}
+.page-hero-blob-2{width:clamp(200px,35vw,400px);height:clamp(200px,35vw,400px);bottom:-10%;left:-5%;background:radial-gradient(circle,rgba(0,207,255,0.06) 0%,transparent 70%);animation:blob-drift 18s ease-in-out infinite alternate-reverse}
+@keyframes blob-drift{from{transform:translate(0,0) scale(1)}to{transform:translate(20px,-20px) scale(1.06)}}
+.page-hero-grid{position:absolute;inset:0;background-image:linear-gradient(to right,rgba(255,255,255,0.03) 1px,transparent 1px),linear-gradient(to bottom,rgba(255,255,255,0.03) 1px,transparent 1px);background-size:3.5rem 3.5rem}
+.page-hero-inner{max-width:var(--container);margin:0 auto;width:100%;position:relative;z-index:2;text-align:center}
+.page-hero-eyebrow{display:inline-flex;align-items:center;gap:0.5rem;font-family:var(--font-mono);font-size:0.62rem;font-weight:700;text-transform:uppercase;letter-spacing:0.15em;color:var(--clr-text-3);margin-bottom:var(--sp-3)}
+.page-hero-eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--clr-gold);animation:pulse-dot 2s ease infinite}
+@keyframes pulse-dot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.5;transform:scale(0.7)}}
+.page-hero-title{font-family:var(--font-display);font-size:var(--text-6xl);font-weight:900;letter-spacing:-0.03em;line-height:1.05;text-transform:uppercase;background:linear-gradient(160deg,#ffffff 20%,#94a3b8 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:var(--sp-3)}
+.page-hero-subtitle{font-size:var(--text-base);color:var(--clr-text-2);line-height:1.75;max-width:58ch;margin:0 auto var(--sp-5)}
+.page-hero-cta{display:flex;gap:0.75rem;justify-content:center;flex-wrap:wrap}
+.features-section{padding:var(--sp-12) clamp(1rem,4vw,2rem)}
+.features-inner{max-width:var(--container);margin:0 auto}
+.cta-banner{max-width:var(--container);margin:0 auto var(--sp-12);border-radius:var(--radius-xl);background:linear-gradient(135deg,rgba(7,11,23,0.98),rgba(15,23,42,0.95));border:1px solid var(--clr-border-md);padding:clamp(var(--sp-5),6vw,var(--sp-10)) clamp(var(--sp-4),5vw,var(--sp-8));display:flex;flex-direction:column;align-items:center;text-align:center;gap:var(--sp-4);position:relative;overflow:hidden}
+.cta-banner::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:70%;height:1px;background:linear-gradient(90deg,transparent,rgba(255,193,7,0.5),transparent)}
+@media(min-width:768px){.cta-banner{flex-direction:row;text-align:left}}
+.cta-banner-text{flex:1}
+.cta-banner-text h3{font-family:var(--font-display);font-size:var(--text-3xl);font-weight:900;text-transform:uppercase;letter-spacing:-0.02em;color:var(--clr-text-1);margin-bottom:0.5rem}
+.cta-banner-text p{font-size:var(--text-sm);color:var(--clr-text-2);line-height:1.7;max-width:52ch}
+.cta-banner-actions{display:flex;gap:0.75rem;flex-wrap:wrap;flex-shrink:0;justify-content:center}
+@media(min-width:768px){.cta-banner-actions{justify-content:flex-end}}
 
-        <div class="space-y-6">
-            <h3 class="text-lg font-bold uppercase tracking-wider text-amber-400 font-mono">// Standard Compliance Application Workflow</h3>
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 text-xs">
-                <div class="bg-slate-900 p-5 rounded-xl border border-slate-800 space-y-2">
-                    <div class="text-slate-500 font-mono font-bold">STAGE 01</div>
-                    <h4 class="font-bold text-white text-sm">Feasibility Registration</h4>
-                    <p class="text-slate-400 leading-relaxed font-light">Submitting online infrastructure baseline data via national solar registry setups to receive primary load clearance validations.</p>
-                </div>
-                <div class="bg-slate-900 p-5 rounded-xl border border-slate-800 space-y-2">
-                    <div class="text-slate-500 font-mono font-bold">STAGE 02</div>
-                    <h4 class="font-bold text-white text-sm">Technical Site Clearance</h4>
-                    <p class="text-slate-400 leading-relaxed font-light">Regional electrical safety inspectors verify physical installations, testing interconnect isolation performance before connection authorization.</p>
-                </div>
-                <div class="bg-slate-900 p-5 rounded-xl border border-slate-800 space-y-2">
-                    <div class="text-slate-500 font-mono font-bold">STAGE 03</div>
-                    <h4 class="font-bold text-white text-sm">Net Meter Integration</h4>
-                    <p class="text-slate-400 leading-relaxed font-light">Replacing standard utility meters with advanced bi-directional tracking configurations to measure incoming and outgoing unit metrics.</p>
-                </div>
-                <div class="bg-slate-900 p-5 rounded-xl border border-slate-800 space-y-2">
-                    <div class="text-slate-500 font-mono font-bold">STAGE 04</div>
-                    <h4 class="font-bold text-white text-sm">DBT Subsidy Capitalization</h4>
-                    <p class="text-slate-400 leading-relaxed font-light">Submitting final verification metrics to clear straight capital fund transfers directly into registered client operating ledger frameworks.</p>
-                </div>
-            </div>
+/* Process flow */
+.process-wrap{padding:var(--sp-8) clamp(1rem,4vw,2rem) var(--sp-12)}
+.process-inner{max-width:var(--container);margin:0 auto}
+.process-grid{display:grid;grid-template-columns:1fr;gap:var(--sp-3)}
+@media(min-width:480px){.process-grid{grid-template-columns:1fr 1fr}}
+@media(min-width:1024px){.process-grid{grid-template-columns:repeat(4,1fr)}}
+.process-step{background:linear-gradient(135deg,rgba(7,11,23,0.97),rgba(15,23,42,0.94));border:1px solid var(--clr-border-md);border-radius:var(--radius-xl);padding:var(--sp-4) var(--sp-3);display:flex;flex-direction:column;gap:var(--sp-2);position:relative;overflow:hidden;transition:border-color var(--transition),box-shadow var(--transition),transform var(--transition)}
+.process-step:hover{border-color:rgba(255,193,7,0.25);box-shadow:0 12px 40px rgba(255,193,7,0.06);transform:translateY(-3px)}
+.process-step::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--clr-gold),transparent);opacity:0.4}
+.process-step-num{font-family:var(--font-mono);font-size:0.62rem;font-weight:900;color:var(--clr-gold);text-transform:uppercase;letter-spacing:0.15em;margin-bottom:0.5rem}
+.process-step h4{font-family:var(--font-display);font-size:var(--text-base);font-weight:700;color:var(--clr-text-1);line-height:1.3}
+.process-step p{font-size:var(--text-xs);color:var(--clr-text-2);line-height:1.7;flex:1}
+
+/* Subsidy amount cards */
+.subsidy-grid{display:grid;grid-template-columns:1fr;gap:var(--sp-3);margin-top:var(--sp-6)}
+@media(min-width:640px){.subsidy-grid{grid-template-columns:1fr 1fr 1fr}}
+.subsidy-card{background:linear-gradient(135deg,rgba(7,11,23,0.97),rgba(15,23,42,0.94));border:1px solid var(--clr-border-md);border-radius:var(--radius-xl);padding:var(--sp-4) var(--sp-3);text-align:center;transition:border-color var(--transition),transform var(--transition)}
+.subsidy-card:hover{border-color:rgba(255,193,7,0.25);transform:translateY(-3px)}
+.subsidy-amount{font-family:var(--font-mono);font-size:clamp(1.5rem,4vw,2rem);font-weight:900;color:var(--clr-gold);display:block;line-height:1;margin-bottom:0.375rem}
+.subsidy-size{font-size:var(--text-sm);color:var(--clr-text-1);font-weight:600;margin-bottom:0.25rem}
+.subsidy-note{font-family:var(--font-mono);font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--clr-text-3)}
+</style>
+
+<section class="page-hero" aria-label="Government Subsidy and Grid Integration">
+    <div class="page-hero-bg">
+        <div class="page-hero-grid"></div>
+        <div class="page-hero-blob page-hero-blob-1"></div>
+        <div class="page-hero-blob page-hero-blob-2"></div>
+    </div>
+    <div class="page-hero-inner reveal">
+        <div class="page-hero-eyebrow"><span class="dot"></span> Regulatory Operations · 2026 Policy Desk</div>
+        <h1 class="page-hero-title">Government Subsidy<br>&amp; Grid Integration</h1>
+        <p class="page-hero-subtitle">Navigating regulatory landscapes is a core challenge for clean energy projects. SIP INFRA manages the entire regulatory pipeline — TANGEDCO applications, load approvals, and Central Subsidy DBT disbursements.</p>
+        <div class="page-hero-cta">
+            <a href="https://wa.me/916381127757?text=Hi%20SIP%20INFRA!%20I%20am%20interested%20in%20a%20solar%20quote." target="_blank" class="btn btn-gold">Check My Subsidy Eligibility</a>
+            <a href="{% url 'home' %}#solar_calculator" class="btn btn-dark">Calculate ROI</a>
         </div>
     </div>
 </section>
+
+<!-- Subsidy Amounts -->
+<div class="features-section">
+    <div class="features-inner">
+        <div class="section-header reveal">
+            <div class="section-eyebrow"><span class="eyebrow-dot"></span> PM Surya Ghar 2024 Scheme</div>
+            <h2 class="section-title"><span class="gradient-text">Central Government</span> Subsidy Slab</h2>
+            <p class="section-subtitle">Under the PM Surya Ghar: Muft Bijli Yojana, residential solar installations receive direct bank transfer subsidies — no paperwork hassle when SIP INFRA handles it end-to-end.</p>
+        </div>
+        <div class="subsidy-grid">
+            <div class="subsidy-card stagger-item">
+                <span class="subsidy-amount">₹30,000</span>
+                <div class="subsidy-size">1 kW System</div>
+                <div class="subsidy-note">₹30,000 per kW</div>
+            </div>
+            <div class="subsidy-card stagger-item" style="border-color:rgba(255,193,7,0.2);">
+                <span class="subsidy-amount">₹60,000</span>
+                <div class="subsidy-size">2 kW System</div>
+                <div class="subsidy-note">₹30,000 per kW</div>
+            </div>
+            <div class="subsidy-card stagger-item">
+                <span class="subsidy-amount">₹78,000</span>
+                <div class="subsidy-size">3 kW &amp; Above</div>
+                <div class="subsidy-note">Maximum subsidy cap</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Process Flow -->
+<div class="process-wrap">
+    <div class="process-inner">
+        <div class="section-header reveal">
+            <div class="section-eyebrow"><span class="eyebrow-dot"></span> Our Process</div>
+            <h2 class="section-title"><span class="gradient-text">Standard Compliance</span> Application Workflow</h2>
+            <p class="section-subtitle">SIP INFRA manages every stage of the regulatory pipeline, so you receive the subsidy without dealing with any paperwork complexity.</p>
+        </div>
+        <div class="process-grid">
+            <div class="process-step stagger-item">
+                <div class="process-step-num">Stage 01</div>
+                <h4>Feasibility Registration</h4>
+                <p>Submitting baseline infrastructure data via the national solar portal to receive primary load clearance and sanction validation from your local DISCOM.</p>
+            </div>
+            <div class="process-step stagger-item">
+                <div class="process-step-num">Stage 02</div>
+                <h4>Technical Site Clearance</h4>
+                <p>Regional CEIG electrical safety inspectors verify the physical installation — testing interconnect isolation performance, earthing, and protection systems before authorization.</p>
+            </div>
+            <div class="process-step stagger-item">
+                <div class="process-step-num">Stage 03</div>
+                <h4>Net Meter Integration</h4>
+                <p>Replacing standard utility meters with advanced bi-directional tracking configurations to accurately measure incoming and outgoing generation unit metrics.</p>
+            </div>
+            <div class="process-step stagger-item">
+                <div class="process-step-num">Stage 04</div>
+                <h4>DBT Subsidy Transfer</h4>
+                <p>Submitting final verification metrics to clear straight capital fund transfers directly into your registered bank account — typically within 30 days of commissioning.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="cta-banner reveal" style="padding-left:clamp(1rem,4vw,2rem);padding-right:clamp(1rem,4vw,2rem);">
+    <div class="cta-banner-text">
+        <h3>Don't Leave ₹78,000 on the Table</h3>
+        <p>Our regulatory experts have successfully processed 450+ subsidy applications with 100% approval rate. Let us handle yours — free of any service fee.</p>
+    </div>
+    <div class="cta-banner-actions">
+        <a href="https://wa.me/916381127757?text=Hi%20SIP%20INFRA!%20I%20am%20interested%20in%20a%20solar%20quote." target="_blank" class="btn btn-gold">Start Subsidy Process →</a>
+        <a href="{% url 'residential' %}" class="btn btn-dark">View Residential Plans</a>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    if (typeof gsap === 'undefined') { document.querySelectorAll('.reveal,.stagger-item').forEach(el => { el.style.opacity=1; el.style.transform='none'; }); return; }
+    gsap.registerPlugin(ScrollTrigger);
+    gsap.utils.toArray('.reveal').forEach(el => { gsap.to(el, { opacity:1, y:0, duration:0.9, ease:'power3.out', scrollTrigger:{ trigger:el, start:'top 85%', once:true } }); });
+    gsap.utils.toArray('.stagger-item').forEach((el,i) => { gsap.to(el, { opacity:1, y:0, duration:0.7, delay:i*0.08, ease:'power3.out', scrollTrigger:{ trigger:el, start:'top 90%', once:true } }); });
+});
+</script>
 {% endblock %}

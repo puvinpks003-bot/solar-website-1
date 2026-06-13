@@ -994,13 +994,32 @@
     background: linear-gradient(to bottom, transparent, rgba(14,165,233,0.02), transparent);
 }
 .testimonials-inner { max-width: var(--container); margin: 0 auto; }
-.testimonials-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--sp-4);
+@keyframes marqueeSlideRight {
+    0% { transform: translateX(-50%); }
+    100% { transform: translateX(0); }
 }
-@media (min-width: 640px) { .testimonials-grid { grid-template-columns: 1fr 1fr; } }
-@media (min-width: 1024px) { .testimonials-grid { grid-template-columns: 1fr 1fr 1fr; } }
+.testimonials-slider-wrap {
+    overflow: hidden;
+    width: calc(100% + 2rem);
+    margin-left: -1rem;
+    padding: 1rem;
+}
+.testimonials-grid {
+    display: flex;
+    gap: 1.5rem;
+    width: max-content;
+    animation: marqueeSlideRight 30s linear infinite;
+    will-change: transform;
+}
+.testimonials-grid:hover {
+    animation-play-state: paused;
+}
+.testimonial-card {
+    flex-shrink: 0;
+    width: 280px;
+}
+@media (min-width: 640px) { .testimonial-card { width: 320px; } }
+@media (min-width: 1024px) { .testimonial-card { width: 350px; } }
 .testimonial-card {
     background: linear-gradient(135deg, var(--clr-surface) 0%, var(--clr-surface-md) 100%);
     border: 1px solid var(--clr-border-md);
@@ -1712,7 +1731,8 @@
             <div class="section-eyebrow"><span class="eyebrow-dot"></span> Client Testimonials</div>
             <h2 class="section-title" id="testimonials-heading"><span class="gradient-text">Trusted by Industries</span> Across Tamil Nadu</h2>
         </div>
-        <div class="testimonials-grid">
+        <div class="testimonials-slider-wrap">
+            <div class="testimonials-grid" id="testimonials-track">
             <div class="testimonial-card stagger-item">
                 <div class="testimonial-stars">
                     {% for i in "12345" %}<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>{% endfor %}
@@ -1752,7 +1772,8 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> <!-- end grid/track -->
+        </div> <!-- end slider wrap -->
     </div>
 </section>
 
@@ -2097,25 +2118,28 @@ function init3DCard() {
     });
 }
 
-/* ---- Project Slider (Infinite Auto-scroll) ---- */
-function initProjectSlider() {
-    const track = document.getElementById('project-track');
-    if (!track) return;
-    
-    // Duplicate inner content for seamless infinite marquee scroll
-    const originalContent = track.innerHTML;
-    track.innerHTML = originalContent + originalContent;
-    
-    // Hide manual navigation since it's now fully automatic
-    const nav = document.querySelector('.project-nav');
-    if (nav) nav.style.display = 'none';
+/* ---- Project & Testimonial Sliders (Infinite Auto-scroll) ---- */
+function initSliders() {
+    const projTrack = document.getElementById('project-track');
+    if (projTrack) {
+        const pContent = projTrack.innerHTML;
+        projTrack.innerHTML = pContent + pContent;
+        const nav = document.querySelector('.project-nav');
+        if (nav) nav.style.display = 'none';
+    }
+
+    const testTrack = document.getElementById('testimonials-track');
+    if (testTrack) {
+        const tContent = testTrack.innerHTML;
+        testTrack.innerHTML = tContent + tContent;
+    }
 }
 
 /* ---- Run everything ---- */
 document.addEventListener('DOMContentLoaded', () => {
     initParticles();
     init3DCard();
-    initProjectSlider();
+    initSliders();
     // Init tariff slider display
     const ts = document.getElementById('calc-tariff');
     if (ts) updateTariffLabel(ts.value);

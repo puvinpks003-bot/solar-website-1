@@ -3,6 +3,20 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <script>
+        (function() {
+            try {
+                var localTheme = localStorage.getItem('theme');
+                var sysTheme = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+                var theme = localTheme || sysTheme;
+                if (theme === 'light') {
+                    document.documentElement.setAttribute('data-theme', 'light');
+                } else {
+                    document.documentElement.removeAttribute('data-theme');
+                }
+            } catch (e) {}
+        })();
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SIP INFRA | Megawatt Solar Solutions Tamil Nadu</title>
     <meta name="description" content="SIP INFRA designs, builds, and deploys high-yield captive solar power grids for heavy industries, commercial complexes, and residential developments across South India. Tamil Nadu's Tier-1 Solar EPC.">
@@ -24,7 +38,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
 
-    <link rel="stylesheet" href="{% static 'css/theme.css' %}">
+    <link rel="stylesheet" href="{% static 'css/theme.css' %}?v=2">
 </head>
 <body class="solar-grid-bg">
 
@@ -226,7 +240,7 @@
          BASE JAVASCRIPT — Navbar, Mobile Menu, Back to Top,
          Mouse Spotlight, Scroll Header Blur, Active Nav States
     ========================================================= -->
-    <script src="{% static 'js/theme.js' %}" defer></script>
-    <script src="{% static 'js/main.js' %}" defer></script>
+    <script src="{% static 'js/theme.js' %}?v=2" defer></script>
+    <script src="{% static 'js/main.js' %}?v=2" defer></script>
 </body>
 </html>

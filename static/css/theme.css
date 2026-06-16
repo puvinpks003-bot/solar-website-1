@@ -7,13 +7,15 @@
             --clr-secondary:   #E2E8F0;
             --clr-accent:      #3B82F6;
             --clr-success:     #4ADE80;
+            --clr-primary-glow: rgba(251,191,36,0.15); /* Reverting glow as well to match */
+            --clr-secondary-glow: rgba(59,130,246,0.1);
             
             --clr-bg:          #020617;
             --clr-bg-2:        #0F172A; /* Used for subtle bg */
             --clr-surface:     #0F172A;
             --clr-surface-md:  rgba(15,23,42,0.95);
-            --clr-border:      rgba(255,255,255,0.08);
-            --clr-border-md:   rgba(255,255,255,0.08);
+            --clr-border:      rgba(0,230,118,0.15);
+            --clr-border-md:   rgba(0,230,118,0.15);
             
             --clr-text-1:      #F8FAFC;
             --clr-text-2:      #94A3B8;
@@ -89,37 +91,42 @@
 
         /* Light Theme Overrides */
         [data-theme="light"] {
-            --clr-primary:     #F59E0B;
-            --clr-secondary:   #0F172A;
-            --clr-accent:      #2563EB;
-            --clr-success:     #22C55E;
-            --clr-primary-glow: rgba(30,58,138,0.06);
-            --clr-secondary-glow: rgba(59,130,246,0.04);
+            --clr-primary:     #00C853; /* Lush, Ultra-Crisp Green */
+            --clr-secondary:   #009624; /* Deep Forest Green */
+            --clr-accent:      #69F0AE; /* Bright Neon Green Accent */
+            --clr-success:     #00E676;
+            --clr-primary-glow: rgba(0,200,83,0.2);
+            --clr-secondary-glow: rgba(0,150,36,0.15);
             
-            --clr-bg:          #F1F5F9; /* Duller, softer grey background */
-            --clr-bg-2:        #E2E8F0; /* Even duller for contrast */
-            --clr-surface:     #FFFFFF; /* Keep cards stark white to pop */
+            --clr-bg:          #F5F5F5; /* Dull white */
+            --clr-bg-2:        #EFEFEF; /* Slightly darker dull white */
+            --clr-surface:     #FFFFFF; 
             --clr-surface-md:  rgba(255,255,255,0.95);
-            --clr-border:      rgba(15,23,42,0.08);
-            --clr-border-md:   rgba(15,23,42,0.08);
+            --clr-border:      rgba(0,200,83,0.15);
+            --clr-border-md:   rgba(0,200,83,0.15);
             
             --clr-text-1:      #0F172A;
-            --clr-text-2:      #475569;
+            --clr-text-2:      #334155;
             --clr-text-3:      #64748B;
             --clr-white:       #ffffff;
+            
+            --btn-text-color:  #ffffff;
+            --btn-extra-glow:  0 0 15px rgba(0,200,83,0.3);
+            
+            --gradient-1: linear-gradient(135deg, #00E676, #009624); /* Vibrant to deep pure green */
             
             /* Shadows (Sharp Layered) */
             --shadow-sm:  0 1px 2px rgba(15,23,42,0.04);
             --shadow-md:  0 4px 12px rgba(15,23,42,0.06), 0 1px 2px rgba(15,23,42,0.04);
             --shadow-lg:  0 12px 24px rgba(15,23,42,0.08), 0 4px 8px rgba(15,23,42,0.04);
             --shadow-xl:  0 20px 40px rgba(15,23,42,0.12), 0 8px 16px rgba(15,23,42,0.06);
-            --shadow-primary: 0 0 20px var(--clr-secondary-glow), 0 0 40px rgba(14,165,233,0.03);
-            --shadow-secondary: 0 0 20px rgba(2,132,199,0.08);
+            --shadow-primary: 0 0 20px var(--clr-primary-glow), 0 0 40px rgba(0,200,83,0.04);
+            --shadow-secondary: 0 0 20px var(--clr-secondary-glow);
             
             /* Overlays for light mode */
-            --bg-overlay: rgba(241,245,249,0.85);
-            --bg-overlay-light: rgba(241,245,249,0.7);
-            --border-overlay: rgba(15,23,42,0.1);
+            --bg-overlay: rgba(248,250,252,0.85);
+            --bg-overlay-light: rgba(248,250,252,0.7);
+            --border-overlay: rgba(0,220,130,0.1);
         }
 
         [data-theme="light"] body {
@@ -272,6 +279,11 @@
             padding-bottom: 0.75rem;
         }
         #site-header.scrolled .nav-inner {
+            background: var(--bg-overlay);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid var(--clr-border-md);
+            border-radius: var(--radius-md);
             box-shadow: var(--shadow-lg);
         }
 
@@ -283,11 +295,8 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background: var(--bg-overlay);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-            border: 1px solid var(--clr-border-md);
-            border-radius: var(--radius-md);
+            background: transparent;
+            border: none;
             position: relative;
             transition: box-shadow var(--transition);
         }
@@ -434,7 +443,7 @@
             color: var(--clr-white);
             border-color: var(--clr-primary);
             transform: translateY(-2px);
-            box-shadow: var(--shadow-primary), 0 0 15px rgba(255,193,7,0.3);
+            box-shadow: var(--shadow-primary), var(--btn-extra-glow, 0 0 15px rgba(255,193,7,0.3));
         }
         .btn-primary:active {
             transform: translateY(0);
@@ -574,6 +583,12 @@
            FOOTER
         ============================================================ */
         #site-footer {
+            /* Force light text in footer since background is permanently dark */
+            --clr-text-1: #F8FAFC;
+            --clr-text-2: #94A3B8;
+            --clr-text-3: #64748B;
+            --clr-border: rgba(255,255,255,0.08);
+            
             background: linear-gradient(to bottom, #030712, #020617);
             border-top: 1px solid var(--clr-border);
             padding: var(--sp-16) clamp(1rem, 5vw, 2rem) var(--sp-8);
@@ -914,9 +929,7 @@
             inset: 0;
             z-index: 0;
             pointer-events: none;
-            background: 
-                radial-gradient(circle at 15% 25%, var(--clr-primary-glow) 0%, transparent 45%),
-                radial-gradient(circle at 85% 75%, var(--clr-secondary-glow) 0%, transparent 45%);
+            /* Removed background gradients to restore old style UI */
             opacity: 1;
         }
 

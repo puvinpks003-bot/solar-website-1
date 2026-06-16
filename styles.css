@@ -44,18 +44,7 @@ body {
     pointer-events: none;
 }
 
-.background-glow {
-    position: absolute;
-    top: -20%;
-    left: -10%;
-    width: 60%;
-    height: 60%;
-    background: radial-gradient(circle, rgba(255, 193, 7, 0.15) 0%, rgba(11, 17, 32, 0) 70%);
-    border-radius: 50%;
-    z-index: -1;
-    pointer-events: none;
-    filter: blur(5rem);
-}
+/* Removed .background-glow to restore old style UI */
 
 .container {
     width: 100%;
@@ -207,12 +196,12 @@ body {
 .btn:hover { transform: translateY(-0.15rem); }
 
 .btn-primary {
-    background: linear-gradient(135deg, #FF9800, #FFC107);
-    color: var(--bg-color); /* Darker text for contrast on yellow */
-    box-shadow: 0 0.25rem 1rem rgba(255, 193, 7, 0.3);
+    background: var(--gradient-1, linear-gradient(135deg, #FF9800, #FFC107));
+    color: var(--btn-text-color, var(--bg-color));
+    box-shadow: 0 0.25rem 1rem var(--clr-primary-glow, rgba(255, 193, 7, 0.3));
 }
 
-.btn-primary:hover { box-shadow: 0 0.4rem 1.2rem rgba(255, 193, 7, 0.4); }
+.btn-primary:hover { box-shadow: 0 0.4rem 1.2rem var(--btn-extra-glow, rgba(255, 193, 7, 0.4)); }
 
 .btn-secondary {
     background-color: #1F2937;
